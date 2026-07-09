@@ -1,8 +1,29 @@
 {
-  "generated_at": "2026-07-09T20:49:34Z",
+  "generated_at": "2026-07-09T21:19:56Z",
   "collection_id": "all",
-  "count": 1,
+  "count": 2,
   "items": [
+    {
+      "key": "NVX8638Y",
+      "title": "Formulating questions to explore complex interventions within qualitative evidence synthesis",
+      "authors": [
+        "Andrew Booth",
+        "Jane Noyes",
+        "Kate Flemming",
+        "Graham Moore",
+        "Özge Tunçalp",
+        "Elham Shakibazadeh"
+      ],
+      "year": "2019",
+      "type": "Article de revue",
+      "abstract": "When making decisions about complex interventions, guideline development groups need to factor in the sociocultural acceptability of an intervention, as well as contextual factors that impact on the feasibility of that intervention. Qualitative evidence synthesis offers one method of exploring these issues. This paper considers the extent to which current methods of question formulation are meeting this challenge. It builds on a rapid review of 38 different frameworks for formulating questions. To be useful, a question framework should recognise context (as setting, environment or context); acknowledge the criticality of different stakeholder perspectives (differentiated from the target population); accommodate elements of time/timing and place; be sensitive to qualitative data (eg, eliciting themes or findings). None of the identified frameworks satisfied all four of these criteria. An innovative question framework, PerSPEcTiF, is proposed and retrospectively applied to a published WHO guideline for a complex intervention. Further testing and evaluation of the PerSPEcTiF framework is required.",
+      "tags": [
+        "revue litterature"
+      ],
+      "doi": "10.1136/bmjgh-2018-001107",
+      "url": "https://gh.bmj.com/content/4/Suppl_1/e001107",
+      "dateAdded": "2026-07-09"
+    },
     {
       "key": "ZFA24SR3",
       "title": "Eau, territoires et changements globaux : vers une approche systémique et participative de modélisation pour concevoir et agir en complexité",
