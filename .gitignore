@@ -1,0 +1,16 @@
+# Credentials (NE JAMAIS commiter)
+scripts/config.py
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

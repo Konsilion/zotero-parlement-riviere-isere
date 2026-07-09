@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collection Zotero</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="layout">
+    <!-- ===== Sidebar filtres ===== -->
+    <aside class="sidebar" aria-label="Filtres">
+      <div class="filter-block">
+        <label for="search" class="filter-label">Recherche</label>
+        <input
+          type="search"
+          id="search"
+          placeholder="Titre, auteur, mot-clé…"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="filter-block">
+        <label for="year-select" class="filter-label">Année</label>
+        <select id="year-select">
+          <option value="">Toutes les années</option>
+        </select>
+      </div>
+
+      <div class="filter-block">
+        <span class="filter-label">Tags</span>
+        <div id="tag-list" class="tag-list">
+          <p class="muted">Chargement…</p>
+        </div>
+      </div>
+
+      <div class="filter-block">
+        <label for="type-select" class="filter-label">Type</label>
+        <select id="type-select">
+          <option value="">Tous les types</option>
+        </select>
+      </div>
+
+      <button type="button" id="reset-filters" class="reset-btn">
+        Réinitialiser les filtres
+      </button>
+    </aside>
+
+    <!-- ===== Grille de cartes ===== -->
+    <section class="content" aria-label="Documents">
+      <div class="content-header">
+        <span id="result-count" class="result-count">— résultats</span>
+      </div>
+      <div id="grid" class="grid">
+        <p class="muted center">Chargement de la collection…</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Modale détail ===== -->
+  <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" type="button" data-close aria-label="Fermer">×</button>
+      <span id="modal-type" class="modal-type"></span>
+      <h2 id="modal-title" class="modal-title"></h2>
+      <p id="modal-authors" class="modal-authors"></p>
+      <p id="modal-year" class="modal-year"></p>
+      <p id="modal-dateAdded" class="modal-dateAdded"></p>
+      <div id="modal-tags" class="modal-tags"></div>
+      <div class="modal-section">
+        <h3>Résumé</h3>
+        <p id="modal-abstract" class="modal-abstract"></p>
+      </div>
+      <div class="modal-actions">
+        <a id="modal-source" class="btn btn-primary" href="#" target="_blank" rel="noopener">
+          Ouvrir la source
+        </a>
+        <button id="modal-bibtex" type="button" class="btn btn-secondary">
+          Copier la citation BibTeX
+        </button>
+      </div>
+      <p id="modal-copied" class="copied-msg" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
