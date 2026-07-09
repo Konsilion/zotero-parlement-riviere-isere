@@ -147,7 +147,7 @@ def main():
     formatted = [it for it in (format_item(r) for r in raw_items) if it is not None]
     print(f"  {len(formatted)} items retenus (avec titre)")
 
-    out_path = Path(__file__).resolve().parent.parent / "site" / "data" / "collection.json"
+    out_path = Path(__file__).resolve().parent.parent / "data" / "collection.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     payload = {
