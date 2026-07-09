@@ -56,7 +56,7 @@ git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
-git remote add origin https://github.com/konsilion/zotero-vitrine.git
+git remote add origin https://github.com/konsilion/zotero-parlement-riviere-isere.git
 git push -u origin main
 ```
 
@@ -64,7 +64,7 @@ git push -u origin main
 
 Sur GitHub : **Settings → Pages → Source = Deploy from a branch → Branch = `main` / Root**
 
-→ URL : `https://konsilion.github.io/zotero-vitrine/`
+→ URL : `https://konsilion.github.io/zotero-parlement-riviere-isere/`
 
 ### 3. Mettre à jour la collection
 
@@ -86,7 +86,7 @@ Pour embarquer la vitrine dans un autre site :
 
 ```html
 <iframe
-  src="https://konsilion.github.io/zotero-vitrine/"
+  src="https://konsilion.github.io/zotero-parlement-riviere-isere/"
   width="100%"
   height="800"
   frameborder="0"

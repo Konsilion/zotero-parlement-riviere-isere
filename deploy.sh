@@ -38,4 +38,4 @@ git push origin main
 
 echo ""
 echo "✓ Déploié ! GitHub Pages se met à jour dans 1-2 minutes."
-echo "  URL: https://konsilion.github.io/zotero-vitrine/"
+echo "  URL: https://konsilion.github.io/zotero-parlement-riviere-isere/"
