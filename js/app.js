@@ -3,6 +3,7 @@
    - Fetch collection.json
    - Rendu des cartes
    - Filtres (recherche + tags + année + type)
+   - Tags dynamiques : recalculés à chaque filtre, compteurs mis à jour, tags à 0 masqués
    - Modale détail + copie BibTeX
    ========================================================= */
 
@@ -58,7 +59,6 @@
     return authors.slice(0, 3).join(", ") + ", et al.";
   };
 
-  // Petite "carte" → représentation compacte pour la grille
   const formatAuthorsShort = (authors) => {
     if (!authors || authors.length === 0) return "Auteur inconnu";
     if (authors.length === 1) return authors[0];
@@ -87,22 +87,16 @@
     }
   }
 
-  // ---------- Construction des options de filtres ----------
+  // ---------- Construction des options de filtres (une seule fois) ----------
   function buildFilterOptions() {
-    // Années distinctes
     const years = new Set();
     const types = new Set();
-    const tagCounts = new Map();
 
     for (const it of state.items) {
       if (it.year) years.add(it.year);
       if (it.type) types.add(it.type);
-      for (const t of it.tags) {
-        tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
-      }
     }
 
-    // Remplir select année (tri décroissant)
     [...years].sort((a, b) => b.localeCompare(a)).forEach((y) => {
       const opt = document.createElement("option");
       opt.value = y;
@@ -110,46 +104,18 @@
       els.yearSelect.appendChild(opt);
     });
 
-    // Remplir select type (alphabétique)
     [...types].sort((a, b) => a.localeCompare(b, "fr")).forEach((t) => {
       const opt = document.createElement("option");
       opt.value = t;
       opt.textContent = t;
       els.typeSelect.appendChild(opt);
     });
-
-    // Remplir tags (tri par fréquence décroissante)
-    const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
-    if (sortedTags.length === 0) {
-      els.tagList.innerHTML = `<p class="muted">Aucun tag</p>`;
-    } else {
-      els.tagList.innerHTML = "";
-      for (const [tag, count] of sortedTags) {
-        const pill = document.createElement("button");
-        pill.type = "button";
-        pill.className = "tag-pill";
-        pill.dataset.tag = tag;
-        pill.innerHTML = `${escapeHtml(tag)}<span class="tag-count">${count}</span>`;
-        pill.addEventListener("click", () => {
-          if (state.selectedTags.has(tag)) {
-            state.selectedTags.delete(tag);
-            pill.classList.remove("active");
-          } else {
-            state.selectedTags.add(tag);
-            pill.classList.add("active");
-          }
-          render();
-        });
-        els.tagList.appendChild(pill);
-      }
-    }
   }
 
   // ---------- Filtrage ----------
   function getFilteredItems() {
     const q = state.searchText.trim().toLowerCase();
     return state.items.filter((it) => {
-      // Recherche texte : titre, auteurs, abstract, tags
       if (q) {
         const haystack = [
           it.title,
@@ -161,11 +127,8 @@
           .toLowerCase();
         if (!haystack.includes(q)) return false;
       }
-      // Année
       if (state.selectedYear && it.year !== state.selectedYear) return false;
-      // Type
       if (state.selectedType && it.type !== state.selectedType) return false;
-      // Tags (intersection : l'item doit avoir TOUS les tags sélectionnés)
       if (state.selectedTags.size > 0) {
         const itemTags = new Set(it.tags || []);
         for (const t of state.selectedTags) {
@@ -176,10 +139,70 @@
     });
   }
 
+  // ---------- Rendu des tags dynamiques ----------
+  function renderTags(filteredItems) {
+    // Compter les tags parmi les items déjà filtrés (par recherche + année + type + tags sélectionnés)
+    const tagCounts = new Map();
+    for (const it of filteredItems) {
+      for (const t of it.tags || []) {
+        tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
+      }
+    }
+
+    // Tags déjà sélectionnés qui ne sont plus dans les résultats → on les garde visibles (actifs)
+    // mais ils auront le compteur des items restants
+    for (const t of state.selectedTags) {
+      if (!tagCounts.has(t)) {
+        tagCounts.set(t, 0);
+      }
+    }
+
+    // Tri : tags sélectionnés en premier, puis par fréquence décroissante
+    const sortedTags = [...tagCounts.entries()].sort((a, b) => {
+      const aSelected = state.selectedTags.has(a[0]);
+      const bSelected = state.selectedTags.has(b[0]);
+      if (aSelected && !bSelected) return -1;
+      if (!aSelected && bSelected) return 1;
+      return b[1] - a[1];
+    });
+
+    // Filtrer les tags à 0 (sauf les sélectionnés, qu'on garde même à 0 pour pouvoir les désélectionner)
+    const visibleTags = sortedTags.filter(([tag, count]) => count > 0 || state.selectedTags.has(tag));
+
+    if (visibleTags.length === 0) {
+      els.tagList.innerHTML = `<p class="muted">Aucun tag disponible</p>`;
+      return;
+    }
+
+    els.tagList.innerHTML = "";
+    for (const [tag, count] of visibleTags) {
+      const pill = document.createElement("button");
+      pill.type = "button";
+      pill.className = "tag-pill";
+      if (state.selectedTags.has(tag)) {
+        pill.classList.add("active");
+      }
+      pill.dataset.tag = tag;
+      pill.innerHTML = `${escapeHtml(tag)}<span class="tag-count">${count}</span>`;
+      pill.addEventListener("click", () => {
+        if (state.selectedTags.has(tag)) {
+          state.selectedTags.delete(tag);
+        } else {
+          state.selectedTags.add(tag);
+        }
+        render();
+      });
+      els.tagList.appendChild(pill);
+    }
+  }
+
   // ---------- Rendu ----------
   function render() {
     const filtered = getFilteredItems();
     els.resultCount.textContent = `${filtered.length} résultat${filtered.length > 1 ? "s" : ""}`;
+
+    // Rendu des tags dynamiques (basé sur les items filtrés)
+    renderTags(filtered);
 
     if (filtered.length === 0) {
       els.grid.innerHTML = `<p class="empty">Aucun document ne correspond aux filtres.</p>`;
@@ -188,7 +211,6 @@
 
     els.grid.innerHTML = filtered.map((it) => renderCard(it)).join("");
 
-    // Attache les listeners sur les cartes
     els.grid.querySelectorAll(".card").forEach((card) => {
       card.addEventListener("click", () => {
         const key = card.dataset.key;
@@ -230,12 +252,10 @@
     els.modalYear.textContent = item.year ? `📅 ${item.year}` : "";
     els.modalDateAdded.textContent = item.dateAdded ? `Ajouté le ${item.dateAdded}` : "";
 
-    // Tags
     els.modalTags.innerHTML = (item.tags || [])
       .map((t) => `<span class="card-tag">${escapeHtml(t)}</span>`)
       .join("");
 
-    // Abstract
     if (item.abstract && item.abstract.trim()) {
       els.modalAbstract.textContent = item.abstract;
       els.modalAbstract.classList.remove("empty");
@@ -244,7 +264,6 @@
       els.modalAbstract.classList.add("empty");
     }
 
-    // Bouton source
     const sourceUrl = item.url || (item.doi ? `https://doi.org/${item.doi}` : null);
     if (sourceUrl) {
       els.modalSource.href = sourceUrl;
@@ -256,7 +275,6 @@
       els.modalSource.textContent = "Pas de lien disponible";
     }
 
-    // Stocker l'item courant pour le bouton BibTeX
     els.modalBibtex.dataset.key = item.key;
     els.modalCopied.textContent = "";
 
@@ -271,22 +289,6 @@
 
   // ---------- BibTeX ----------
   function buildBibtex(item) {
-    // Type Zotero → type BibTeX
-    const BIBTEX_TYPE = {
-      "book": "book",
-      "bookSection": "incollection",
-      "journalArticle": "article",
-      "magazineArticle": "article",
-      "newspaperArticle": "article",
-      "thesis": "phdthesis",
-      "report": "techreport",
-      "conferencePaper": "inproceedings",
-      "manuscript": "unpublished",
-      "webpage": "misc",
-      "preprint": "article",
-    };
-    // Le frontend n'a pas le type Zotero brut (on a le libellé FR).
-    // On retombe sur une heuristique basée sur le libellé :
     const FR_TO_BIBTEX = {
       "Livre": "book",
       "Chapitre de livre": "incollection",
@@ -302,13 +304,11 @@
     };
     const type = FR_TO_BIBTEX[item.type] || "misc";
 
-    // Clé de citation
     const firstAuthor = (item.authors && item.authors[0]) || "inconnu";
     const lastName = firstAuthor.split(" ").pop().toLowerCase().replace(/[^a-z]/g, "");
     const year = item.year || "nodate";
     const citeKey = `${lastName}${year}_${(item.key || "").slice(-4)}`;
 
-    // Auteurs BibTeX : "Dupont, Jean" → "Dupont, Jean"
     const bibAuthors = (item.authors || [])
       .map((a) => {
         const parts = a.trim().split(/\s+/);
@@ -336,7 +336,6 @@
       await navigator.clipboard.writeText(text);
       return true;
     } catch (e) {
-      // Fallback : sélection + execCommand
       const ta = document.createElement("textarea");
       ta.value = text;
       ta.style.position = "fixed";
@@ -352,7 +351,6 @@
 
   // ---------- Listeners globaux ----------
   function attachListeners() {
-    // Recherche (debounced)
     let searchTimer = null;
     els.search.addEventListener("input", (e) => {
       clearTimeout(searchTimer);
@@ -362,19 +360,16 @@
       }, 150);
     });
 
-    // Année
     els.yearSelect.addEventListener("change", (e) => {
       state.selectedYear = e.target.value;
       render();
     });
 
-    // Type
     els.typeSelect.addEventListener("change", (e) => {
       state.selectedType = e.target.value;
       render();
     });
 
-    // Reset
     els.resetBtn.addEventListener("click", () => {
       state.selectedTags.clear();
       state.searchText = "";
@@ -383,11 +378,9 @@
       els.search.value = "";
       els.yearSelect.value = "";
       els.typeSelect.value = "";
-      els.tagList.querySelectorAll(".tag-pill.active").forEach((p) => p.classList.remove("active"));
       render();
     });
 
-    // Modale : fermeture
     els.modal.querySelectorAll("[data-close]").forEach((el) => {
       el.addEventListener("click", closeModal);
     });
@@ -397,7 +390,6 @@
       }
     });
 
-    // BibTeX
     els.modalBibtex.addEventListener("click", async () => {
       const key = els.modalBibtex.dataset.key;
       const item = state.items.find((i) => i.key === key);
