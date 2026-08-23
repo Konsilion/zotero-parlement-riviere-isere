@@ -1,8 +1,22 @@
 {
-  "generated_at": "2026-08-23T19:39:41Z",
+  "generated_at": "2026-08-23T19:47:22Z",
   "collection_id": "all",
   "count": 18,
   "items": [
+    {
+      "key": "A6IZETNE",
+      "title": "ENSAG - La rivière sublime",
+      "authors": [
+        "Fatima Lydia GACEM"
+      ],
+      "year": "2026",
+      "type": "Document",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1XWq_W39zzuQP7xGT_ymbMbcck2Lw7zrj/view?usp=drive_link",
+      "dateAdded": "2026-08-19"
+    },
     {
       "key": "6AU8S5U7",
       "title": "Un Parlement pour l'Isère",
@@ -63,20 +77,6 @@
       "authors": [],
       "year": "2026",
       "type": "Rapport",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "A6IZETNE",
-      "title": "ENSAG - La rivière sublime",
-      "authors": [
-        "Fatima Lydia GACEM"
-      ],
-      "year": "2026",
-      "type": "Document",
       "abstract": "",
       "tags": [],
       "doi": null,
