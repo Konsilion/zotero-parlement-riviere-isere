@@ -1,62 +1,8 @@
 {
-  "generated_at": "2026-08-23T19:47:22Z",
+  "generated_at": "2026-08-23T20:21:21Z",
   "collection_id": "all",
   "count": 18,
   "items": [
-    {
-      "key": "A6IZETNE",
-      "title": "ENSAG - La rivière sublime",
-      "authors": [
-        "Fatima Lydia GACEM"
-      ],
-      "year": "2026",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/1XWq_W39zzuQP7xGT_ymbMbcck2Lw7zrj/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "6AU8S5U7",
-      "title": "Un Parlement pour l'Isère",
-      "authors": [
-        "SciencePo"
-      ],
-      "year": "2023",
-      "type": "Rapport",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-23"
-    },
-    {
-      "key": "ET4J3QSW",
-      "title": "Un Parlement pour l'Isère",
-      "authors": [
-        "SciencePo"
-      ],
-      "year": "2026",
-      "type": "Présentation",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-23"
-    },
-    {
-      "key": "27DM3ALT",
-      "title": "SciencePo - Un Parlement pour l'Isère - DIAPO",
-      "authors": [],
-      "year": "2026",
-      "type": "attachment",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-23"
-    },
     {
       "key": "B2CFKMU3",
       "title": "La démocratie de l'eau est-elle en danger ?",
@@ -72,29 +18,45 @@
       "dateAdded": "2026-08-19"
     },
     {
-      "key": "IE3XRK6U",
-      "title": "2025 04 02 Expo Après l'or blanc, l'or bleu_Master DESIGN ENSAG",
-      "authors": [],
-      "year": "2026",
-      "type": "Rapport",
+      "key": "ET4J3QSW",
+      "title": "Un Parlement pour l'Isère",
+      "authors": [
+        "SciencePo"
+      ],
+      "year": "2023",
+      "type": "Présentation",
       "abstract": "",
       "tags": [],
       "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-19"
+      "url": "https://drive.google.com/file/d/19kvRqrKDb0v31gxbFvgdB1bsUrFMF-JJ/view?usp=sharing",
+      "dateAdded": "2026-08-23"
     },
     {
       "key": "2ALBHW2Z",
-      "title": "ENSAG - Rencontrer le vivant",
+      "title": "Rencontrer le vivant",
       "authors": [
         "Fatima Lydia GACEM"
       ],
-      "year": "2026",
+      "year": "2023",
       "type": "Rapport",
       "abstract": "",
       "tags": [],
       "doi": null,
-      "url": null,
+      "url": "https://drive.google.com/file/d/1jpwobyDxeY7likGzSOQDJsHOlcO63dHS/view?usp=sharing",
+      "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "A6IZETNE",
+      "title": "La rivière sublime",
+      "authors": [
+        "Fatima Lydia GACEM"
+      ],
+      "year": "2023",
+      "type": "Document",
+      "abstract": "Pour que le parlement de l’Isère en soit un, il est primordial de penser à une\nforme de représentativité de la rivière au sein du parlement, l’hypothèse que je\ndéveloppe dans ce travail vise à construire cette représentativité (corps , âme et esprit) grâce aux relations interspécifiques de la rivière Isère (l’âme), mais aussi aux caractéristiques de la biotope de la rivière Isère ( corps), reste l’esprit , en Isère les relations d’esprit type chamanisme et autres entre\nl’homme et les entités naturelles n’existent pas, il est donc difficile de songer à interpréter le paramètre esprit dans cet ensemble représentatif de la rivière.",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1XWq_W39zzuQP7xGT_ymbMbcck2Lw7zrj/view?usp=drive_link",
       "dateAdded": "2026-08-19"
     },
     {
@@ -103,67 +65,49 @@
       "authors": [
         "Fatima Lydia Gacem"
       ],
-      "year": "2026",
+      "year": "2023",
       "type": "Document",
       "abstract": "",
       "tags": [],
       "doi": null,
-      "url": null,
+      "url": "https://drive.google.com/file/d/1QvnSEdr3DF94dhR5X0vSemC224Jg4r0u/view?usp=drive_link",
       "dateAdded": "2026-08-19"
     },
     {
-      "key": "7V6ZPYES",
-      "title": "rapport-detaille-bourbre",
-      "authors": [],
-      "year": "2026",
+      "key": "IE3XRK6U",
+      "title": "Expo Après l'or blanc, l'or bleu - Master DESIGN",
+      "authors": [
+        "ENSAG"
+      ],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1QorOXmK94uDrvTJu3wvMOnG9nYnI_8kX/view?usp=drive_link",
+      "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "RUKAWIJM",
+      "title": "Rapport détaillé Vercors",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
       "type": "Document",
       "abstract": "",
       "tags": [],
       "doi": null,
-      "url": null,
+      "url": "https://drive.google.com/file/d/17-TQfdn5PO8NjhQUCQdomU4Gk7fADRoj/view?usp=drive_link",
       "dateAdded": "2026-08-19"
     },
     {
-      "key": "QJFEIVNP",
-      "title": "rapport-detaille-drac-aval",
-      "authors": [],
-      "year": "2026",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "HIJNKJWB",
-      "title": "rapport-detaille-gresivaudan",
-      "authors": [],
-      "year": "2026",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "IGB9FUR2",
-      "title": "rapport-detaille-guiers-aiguebelette",
-      "authors": [],
-      "year": "2026",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "5BSXEGR5",
-      "title": "rapport-detaille-isle-cremieu-pays-couleurs",
-      "authors": [],
-      "year": "2026",
+      "key": "VJ27KQ6S",
+      "title": "Rapport détaillé Romanche",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
       "type": "Document",
       "abstract": "",
       "tags": [],
@@ -173,63 +117,143 @@
     },
     {
       "key": "VPZYT2VN",
-      "title": "rapport-detaille-paladru-fure",
-      "authors": [],
-      "year": "2026",
+      "title": "Rapport détaillé Paladru fure",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
       "type": "Document",
       "abstract": "",
       "tags": [],
       "doi": null,
-      "url": null,
+      "url": "https://drive.google.com/file/d/11iuEahR40FBFlEzP4qAyLtgOOgZkCBuP/view?usp=drive_link",
       "dateAdded": "2026-08-19"
     },
     {
-      "key": "JF4GCW57",
-      "title": "rapport-detaille-perimetre-etude",
-      "authors": [],
-      "year": "2026",
+      "key": "5BSXEGR5",
+      "title": "Rapport détaillé Isle-cremieu-pays-couleurs",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
       "type": "Document",
       "abstract": "",
       "tags": [],
       "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "VJ27KQ6S",
-      "title": "rapport-detaille-romanche",
-      "authors": [],
-      "year": "2026",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "RUKAWIJM",
-      "title": "rapport-detaille-vercors",
-      "authors": [],
-      "year": "2026",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
+      "url": "https://drive.google.com/file/d/1w8-pIgfT-8GyfCJ34OThD_T5onU-XglD/view?usp=drive_link",
       "dateAdded": "2026-08-19"
     },
     {
       "key": "SNFDJ9BY",
-      "title": "rapport-detaille-isere-aval-bas-gresivaudan",
-      "authors": [],
-      "year": "2026",
+      "title": "Rapport détaillé Isere-aval bas-Gresivaudan",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
       "type": "Document",
       "abstract": "",
       "tags": [],
       "doi": null,
-      "url": null,
+      "url": "https://drive.google.com/file/d/17U2K5iEnvW9B6QZ66Z9sPHAyR-_ITXOY/view?usp=drive_link",
       "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "IGB9FUR2",
+      "title": "Rapport détaillé Guiers-Aiguebelette",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
+      "type": "Document",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1dfxI6jVeSVk7cfzOiKT88bkha97Q5a2Y/view?usp=drive_link",
+      "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "HIJNKJWB",
+      "title": "Rapport détaillé Gresivaudan",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
+      "type": "Document",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1CMHvl99V8nbnWPx0HqHkSVP15MpQhm4p/view?usp=drive_link",
+      "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "QJFEIVNP",
+      "title": "Rapport détaillé Drac",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
+      "type": "Document",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1hKDBhBnzGCtGWxh4Xplr2CorjeWQ9HFg/view?usp=drive_link",
+      "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "7V6ZPYES",
+      "title": "Rapport détaillé Bourbe",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
+      "type": "Document",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1v2PfNtlOCL5FtELGDWe7rbfdFuqx_3gP/view?usp=drive_link",
+      "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "JF4GCW57",
+      "title": "Rapport détaillé - Perimetre étude",
+      "authors": [
+        "Département Isère"
+      ],
+      "year": "2025",
+      "type": "Document",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/15qsG06MDwPCM6mgKAnl6SnrsEKuzsYp-/view?usp=drive_link",
+      "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "9Y5MER4T",
+      "title": "Les défis de l’opérationnalisation de la personnalité juridique des rivières dans un contexte européen : réflexions à l’aune du fleuve Rhône",
+      "authors": [
+        "Cyrille Vallet"
+      ],
+      "year": "2024",
+      "type": "Article de revue",
+      "abstract": "Afin d’analyser le processus de reconnaissance de la personnalité juridique du Rhône, cet article s’attache à caractériser des variables clefs de l’opérationnalisation de la personnalité juridique sur quatre écosystèmes : les rivières Whanganui, Atrato et Turag et la lagune Mar Menor. Il est démontré que ces processus sont ascendants, développés initialement en dehors des institutions et mobilisent la population qui n’était jusque-là pas consultée. Bien que l’expression de la voix du fleuve varie grandement, la personnalité juridique permet en général une concertation plus grande des populations riveraines. Sur le Rhône, il manque a minima à ce jour un soutien populaire pour faire avancer la reconnaissance de sa personnalité juridique. De plus, la présence de nombreuses arènes de concertation liées au fleuve est une différence notable par rapport aux quatre cas étudiés. Cependant, sur le Rhône, les prises de décisions sont parfois critiquées comme étant éloignées du terrain ou très centralisées.",
+      "tags": [],
+      "doi": "https://doi.org/10.4000/13jvu",
+      "url": "https://drive.google.com/file/d/1TVVHjyXFRMaqwOtA0IKQVB0WVuRuJzyf/view?usp=sharing",
+      "dateAdded": "2026-08-23"
+    },
+    {
+      "key": "6AU8S5U7",
+      "title": "Un Parlement pour l'Isère",
+      "authors": [
+        "SciencePo"
+      ],
+      "year": "2023",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1KmRyv-hCKyV771_-LsgM_KvhwYrrvzXI/view?usp=sharing",
+      "dateAdded": "2026-08-23"
     }
   ]
 }
