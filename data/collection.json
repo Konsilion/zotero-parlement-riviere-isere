@@ -1,8 +1,350 @@
 {
-  "generated_at": "2026-08-23T20:21:21Z",
+  "generated_at": "2026-09-28T16:02:58Z",
   "collection_id": "all",
-  "count": 18,
+  "count": 36,
   "items": [
+    {
+      "key": "XCGFVBSV",
+      "title": "synthese-paladru-fure",
+      "authors": [],
+      "year": "2025",
+      "type": "Page web",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-paladru-fure.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "I44ZY93U",
+      "title": "synthese-isle-cremieu-pays-des-couleurs",
+      "authors": [],
+      "year": "2025",
+      "type": "Page web",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-isle-cremieu-pays-des-couleurs.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "5IXQMFN6",
+      "title": "synthese-isere-aval-bas-gresivaudan",
+      "authors": [],
+      "year": "2025",
+      "type": "Page web",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-isere-aval-bas-gresivaudan.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "Z5NYUEDA",
+      "title": "synthese-guiers-aiguebelette",
+      "authors": [],
+      "year": "2025",
+      "type": "Page web",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-guiers-aiguebelette.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "GKDIX5RU",
+      "title": "synthese-gresivaudan",
+      "authors": [],
+      "year": "2025",
+      "type": "Page web",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-gresivaudan.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "DGFPTWH8",
+      "title": "synthese-romanche",
+      "authors": [],
+      "year": "2025",
+      "type": "Page web",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-romanche.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "KBU8LJ27",
+      "title": "synthese-vercors",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-vercors.pdf",
+      "dateAdded": "2026-09-13"
+    },
+    {
+      "key": "CIQLTYAV",
+      "title": "synthese-drac-aval",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-drac-aval.pdf",
+      "dateAdded": "2026-09-13"
+    },
+    {
+      "key": "SE8V5864",
+      "title": "synthese-bourbre",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-bourbre.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "UBKHPW9G",
+      "title": "synthese-blv",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-blv.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "JAMDRK5E",
+      "title": "synthese-4vallees-bas-dauphine",
+      "authors": [],
+      "year": "2025",
+      "type": "Document",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/synthese-4vallees-bas-dauphine.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "B9AC9R88",
+      "title": "Bassin versant : Romanche",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-romanche.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "SD3NEQZR",
+      "title": "Bassin versant : Paladru Fure",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-paladru-fure.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "LBC57G5Z",
+      "title": "Bassin versant : Isle Crémieu Pays des couleurs",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-isle-cremieu-pays-couleurs.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "IX2R5BS4",
+      "title": "Bassin versant : Isère aval Bas Grésivaudan",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-isere-aval-bas-gresivaudan.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "UXV7IR6J",
+      "title": "Bassin versant : Guiers-Aiguebelette",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-guiers-aiguebelette.pdf",
+      "dateAdded": "2026-09-11"
+    },
+    {
+      "key": "2P7NLKVV",
+      "title": "Bassin versant : Grésivaudan",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-gresivaudan.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "9L7JFN37",
+      "title": "Bassin versant : Drac-aval",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-drac-aval.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "HUGBL4EX",
+      "title": "Bassin versant : Bourbre",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-bourbre.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "ADBE7QAZ",
+      "title": "Bassin versant : Bièvre Liers Valloire",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-blv.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "M4MH2HSP",
+      "title": "Bassin versant : Vercors",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-vercors.pdf",
+      "dateAdded": "2026-09-14"
+    },
+    {
+      "key": "Z3TEUFE5",
+      "title": "Bassin versant : 4 Vallées Bas Dauphiné",
+      "authors": [],
+      "year": "2025",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://www.isere.fr/sites/default/files/2025-05/rapport-detaille-4valleesbasdauphine.pdf",
+      "dateAdded": "2026-09-11"
+    },
+    {
+      "key": "MBU8AWSU",
+      "title": "Rapport détaillé sur le périmètre de l'étude",
+      "authors": [],
+      "year": "2026",
+      "type": "Rapport",
+      "abstract": "Ce document présente les résultats de l’étude prospective ressource en eau et changement clima que à l’échelle du bassin versant.\nIl est cons tué de 2 par es :\nPar e I : Diagnos c hydroclima que\nPar e II : Diagnos c et qualiﬁca on des grands enjeux pour la ges on de l'eau face au changement clima que à l’échelle du bassin versant\nLa méthodologie mise en œuvre pour abou r à ce livrable est présentée dans le livret méthodologique (livrable séparé).",
+      "tags": [],
+      "doi": null,
+      "url": null,
+      "dateAdded": "2026-09-10"
+    },
+    {
+      "key": "GC8TYS59",
+      "title": "Synthèse de l'étude",
+      "authors": [],
+      "year": "2026",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": null,
+      "dateAdded": "2026-09-10"
+    },
+    {
+      "key": "LF7UTNNN",
+      "title": "Avis du conseil scientifique",
+      "authors": [],
+      "year": "2026",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": null,
+      "dateAdded": "2026-09-10"
+    },
+    {
+      "key": "KFQFTAT8",
+      "title": "Livrets méthodologiques",
+      "authors": [],
+      "year": "2026",
+      "type": "Rapport",
+      "abstract": "Ce document présente les méthodologies mises en œuvre pour mener l’étude.\nIl est constitué de 2 parties :\nPartie I : Livret méthodologique du diagnostic hydroclimatique\nPartie II : Livret méthodologique du diagnostic et qualification des grands enjeux pour la gestion de l'eau face au changement climatique à l’échelle du bassin versant\nLes résultats de l’étude sont présentés dans des rapports détaillés spécifiques à chacun des 11 bassins versant de l’étude et à l’échelle du périmètre de l’étude (livrables séparés).",
+      "tags": [],
+      "doi": null,
+      "url": null,
+      "dateAdded": "2026-09-10"
+    },
+    {
+      "key": "JF4GCW57",
+      "title": "Rapport détaillé - Périmetre de l'étude",
+      "authors": [
+        "Magali Troin Hydroclimat",
+        "Julie Fabre AMO",
+        "Caroline Marchal MOU CD38"
+      ],
+      "year": "2026",
+      "type": "Rapport",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/15qsG06MDwPCM6mgKAnl6SnrsEKuzsYp-/view?usp=drive_link",
+      "dateAdded": "2026-08-19"
+    },
+    {
+      "key": "BUBDH8YS",
+      "title": "Un Parlement pour l'Isère",
+      "authors": [
+        "SciencePo"
+      ],
+      "year": "2023",
+      "type": "Présentation",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": null,
+      "dateAdded": "2026-08-26"
+    },
     {
       "key": "B2CFKMU3",
       "title": "La démocratie de l'eau est-elle en danger ?",
@@ -85,146 +427,6 @@
       "tags": [],
       "doi": null,
       "url": "https://drive.google.com/file/d/1QorOXmK94uDrvTJu3wvMOnG9nYnI_8kX/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "RUKAWIJM",
-      "title": "Rapport détaillé Vercors",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/17-TQfdn5PO8NjhQUCQdomU4Gk7fADRoj/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "VJ27KQ6S",
-      "title": "Rapport détaillé Romanche",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": null,
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "VPZYT2VN",
-      "title": "Rapport détaillé Paladru fure",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/11iuEahR40FBFlEzP4qAyLtgOOgZkCBuP/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "5BSXEGR5",
-      "title": "Rapport détaillé Isle-cremieu-pays-couleurs",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/1w8-pIgfT-8GyfCJ34OThD_T5onU-XglD/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "SNFDJ9BY",
-      "title": "Rapport détaillé Isere-aval bas-Gresivaudan",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/17U2K5iEnvW9B6QZ66Z9sPHAyR-_ITXOY/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "IGB9FUR2",
-      "title": "Rapport détaillé Guiers-Aiguebelette",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/1dfxI6jVeSVk7cfzOiKT88bkha97Q5a2Y/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "HIJNKJWB",
-      "title": "Rapport détaillé Gresivaudan",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/1CMHvl99V8nbnWPx0HqHkSVP15MpQhm4p/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "QJFEIVNP",
-      "title": "Rapport détaillé Drac",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/1hKDBhBnzGCtGWxh4Xplr2CorjeWQ9HFg/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "7V6ZPYES",
-      "title": "Rapport détaillé Bourbe",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/1v2PfNtlOCL5FtELGDWe7rbfdFuqx_3gP/view?usp=drive_link",
-      "dateAdded": "2026-08-19"
-    },
-    {
-      "key": "JF4GCW57",
-      "title": "Rapport détaillé - Perimetre étude",
-      "authors": [
-        "Département Isère"
-      ],
-      "year": "2025",
-      "type": "Document",
-      "abstract": "",
-      "tags": [],
-      "doi": null,
-      "url": "https://drive.google.com/file/d/15qsG06MDwPCM6mgKAnl6SnrsEKuzsYp-/view?usp=drive_link",
       "dateAdded": "2026-08-19"
     },
     {
