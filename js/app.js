@@ -233,6 +233,7 @@
     "Présentation": "presentation",
     "Audio": "audio",
     "Article de revue": "article",
+    "Newsletter": "newsletter",
   };
 
   const typeClass = (type) => "type-" + (TYPE_CLASS_MAP[type] || "autre");

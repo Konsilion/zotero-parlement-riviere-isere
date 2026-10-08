@@ -1,8 +1,36 @@
 {
-  "generated_at": "2026-10-08T23:48:09Z",
+  "generated_at": "2026-10-08T23:48:49Z",
   "collection_id": "all",
-  "count": 85,
+  "count": 93,
   "items": [
+    {
+      "key": "TFMUTNQZ",
+      "title": "Herbicide dangereux (le flufénacet) : notre ONG demande l'interdiction immédiate de ce pesticide-PFAS-perturbateur endocrinien",
+      "authors": [
+        "Générations Futures"
+      ],
+      "year": "2024",
+      "type": "Lettre",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1e7F9ztGWFJaPgoA0gV7zLxosthn4Zfxg/view",
+      "dateAdded": "2026-10-08"
+    },
+    {
+      "key": "QNT7DG3M",
+      "title": "I.S.Rivers 2022 | Quel est le 2ème thème de la conférence ?",
+      "authors": [
+        "Secrétariat I.S.Rivers"
+      ],
+      "year": "2022",
+      "type": "Lettre",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1totq4O5nosJTxAfa5VydMUAf1ib3JpCl/view",
+      "dateAdded": "2026-10-08"
+    },
     {
       "key": "6AU8S5U7",
       "title": "Un Parlement pour l'Isère",
@@ -854,6 +882,86 @@
       "dateAdded": "2026-10-08"
     },
     {
+      "key": "AIQRR4II",
+      "title": "Newsletter n°10",
+      "authors": [
+        "Parlement de la rivière Isère"
+      ],
+      "year": "2026",
+      "type": "Newsletter",
+      "abstract": "",
+      "tags": [
+        "Newsletter"
+      ],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1NN6A8tfET2dYDlfyA0ua5jxOX9-YMPwB/view",
+      "dateAdded": "2026-10-08"
+    },
+    {
+      "key": "JI88EVG7",
+      "title": "Newsletter n°9 (09/06/25)",
+      "authors": [
+        "Parlement de la rivière Isère"
+      ],
+      "year": "2025",
+      "type": "Newsletter",
+      "abstract": "",
+      "tags": [
+        "Newsletter"
+      ],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1OvNF5CnQkPsC5DkaUoKsYp1I63SA4gi4/view",
+      "dateAdded": "2026-10-08"
+    },
+    {
+      "key": "M85C8AB6",
+      "title": "Newsletter n°8 (29/04/25)",
+      "authors": [
+        "Parlement de la rivière Isère"
+      ],
+      "year": "2025",
+      "type": "Newsletter",
+      "abstract": "",
+      "tags": [
+        "Newsletter"
+      ],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1r2ln4XuABadHwYtG5UPvX5uQtZDEcroi/view",
+      "dateAdded": "2026-10-08"
+    },
+    {
+      "key": "SQN66IQS",
+      "title": "Newsletter n°7 (05/03/25) — Invitation à la 2e session",
+      "authors": [
+        "Parlement de la rivière Isère"
+      ],
+      "year": "2025",
+      "type": "Newsletter",
+      "abstract": "",
+      "tags": [
+        "Newsletter"
+      ],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1Y8K2Y0ee536K6y4g9sZ_9yhlgQG_pONK/view",
+      "dateAdded": "2026-10-08"
+    },
+    {
+      "key": "SGR8UAMX",
+      "title": "Newsletter n°6 (24/10/24) — CR de la 1re session",
+      "authors": [
+        "Parlement de la rivière Isère"
+      ],
+      "year": "2024",
+      "type": "Newsletter",
+      "abstract": "",
+      "tags": [
+        "Newsletter"
+      ],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1m3y46Jm0EfbHtZkyE6pN3-u5Gc5S4V9X/view",
+      "dateAdded": "2026-10-08"
+    },
+    {
       "key": "2RJ2UNUJ",
       "title": "Note de réflexion gouvernance du Parlement de la rivière Isère",
       "authors": [
@@ -940,7 +1048,7 @@
       "title": "Carte de navigation Gren-Val",
       "authors": [],
       "year": "2026",
-      "type": "map",
+      "type": "Carte",
       "abstract": "",
       "tags": [],
       "doi": null,
@@ -983,6 +1091,18 @@
       "tags": [],
       "doi": null,
       "url": "https://drive.google.com/file/d/1HZ-hIr6Q3krD5tByK5tXTmhMaB4I2ap7/view",
+      "dateAdded": "2026-10-08"
+    },
+    {
+      "key": "MR93MNT8",
+      "title": "Directive 2000/60/CE du Parlement européen et du Conseil du 23 octobre 2000 établissant un cadre pour une politique communautaire dans le domaine de l'eau",
+      "authors": [],
+      "year": "2026",
+      "type": "Texte de loi",
+      "abstract": "",
+      "tags": [],
+      "doi": null,
+      "url": "https://drive.google.com/file/d/1KrAd2fD7OPWO-WS4HjZyCI_bdPgOi5m5/view",
       "dateAdded": "2026-10-08"
     },
     {

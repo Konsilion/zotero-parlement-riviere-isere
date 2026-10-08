@@ -73,7 +73,8 @@ def fetch_items(group_id, collection_id, api_key):
 def format_item(raw):
     """Convertit un item brut Zotero en dictionnaire léger pour le front."""
     data = raw.get("data", {})
-    title = data.get("title", "").strip()
+    # champ de titre selon le type : email→subject, statute→nameOfAct, sinon title
+    title = (data.get("title") or data.get("subject") or data.get("nameOfAct") or "").strip()
     if not title:
         return None
 
@@ -138,6 +139,10 @@ TYPE_FR_MAP = {
     "radioBroadcast": "Audio",
     "podcast": "Audio",
     "reportSeries": "Série de rapports",
+    "email": "Newsletter",
+    "letter": "Lettre",
+    "map": "Carte",
+    "statute": "Texte de loi",
 }
 
 
