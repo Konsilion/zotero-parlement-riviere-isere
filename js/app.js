@@ -226,13 +226,24 @@
     });
   }
 
+  // ---------- Vignettes de type (classe CSS par type) ----------
+  const TYPE_CLASS_MAP = {
+    "Rapport": "rapport",
+    "Document": "document",
+    "Présentation": "presentation",
+    "Audio": "audio",
+    "Article de revue": "article",
+  };
+
+  const typeClass = (type) => "type-" + (TYPE_CLASS_MAP[type] || "autre");
+
   function renderCard(it) {
     const visibleTags = (it.tags || []).slice(0, 4);
     const hiddenCount = (it.tags || []).length - visibleTags.length;
 
     return `
       <article class="card" data-key="${escapeHtml(it.key)}" tabindex="0" role="button" aria-label="Voir le détail de ${escapeHtml(it.title)}">
-        <span class="card-type">${escapeHtml(it.type || "Document")}</span>
+        <span class="card-type ${typeClass(it.type)}">${escapeHtml(it.type || "Document")}</span>
         <h2 class="card-title">${escapeHtml(it.title)}</h2>
         <p class="card-authors">${escapeHtml(formatAuthorsShort(it.authors))}</p>
         <p class="card-meta">${it.year ? escapeHtml(it.year) : "Année inconnue"}</p>
@@ -247,6 +258,7 @@
   // ---------- Modale ----------
   function openModal(item) {
     els.modalType.textContent = item.type || "Document";
+    els.modalType.className = "modal-type " + typeClass(item.type);
     els.modalTitle.textContent = item.title;
     els.modalAuthors.textContent = formatAuthors(item.authors);
     els.modalYear.textContent = item.year ? `📅 ${item.year}` : "";

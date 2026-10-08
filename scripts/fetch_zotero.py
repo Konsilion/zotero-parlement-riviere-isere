@@ -134,7 +134,9 @@ TYPE_FR_MAP = {
     "dictionaryEntry": "Entrée de dictionnaire",
     "presentation": "Présentation",
     "videoRecording": "Vidéo",
-    "podcast": "Podcast",
+    "audioRecording": "Audio",
+    "radioBroadcast": "Audio",
+    "podcast": "Audio",
     "reportSeries": "Série de rapports",
 }
 

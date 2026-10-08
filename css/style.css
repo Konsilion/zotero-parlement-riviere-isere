@@ -215,12 +215,80 @@ select:focus {
   outline-offset: 2px;
 }
 
-.card-type {
-  font-size: 0.75rem;
+.card-type,
+.modal-type {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  background: var(--tag-bg);
+}
+
+/* ---- Vignettes par type (palette Office) ---- */
+.card-type.type-rapport, .modal-type.type-rapport {
+  background: #e3ecf7;
+  border-color: #c3d3eb;
+  color: #2b579a; /* bleu Word */
+}
+.card-type.type-document, .modal-type.type-document {
+  background: #f0f0f1;
+  border-color: #d9d9dc;
+  color: #5a5a5e; /* gris */
+}
+.card-type.type-presentation, .modal-type.type-presentation {
+  background: #fbeae3;
+  border-color: #f2c9bc;
+  color: #c2401f; /* orange PowerPoint */
+}
+.card-type.type-audio, .modal-type.type-audio {
+  background: #f1e9fb;
+  border-color: #dccaf4;
+  color: #6d28d9; /* violet */
+}
+.card-type.type-article, .modal-type.type-article {
+  background: #e3f1e8;
+  border-color: #bfdccb;
+  color: #1e6b3c; /* vert Excel */
+}
+.card-type.type-autre, .modal-type.type-autre {
+  background: var(--tag-bg);
+  border-color: var(--border);
+  color: var(--accent);
+}
+
+/* Variantes dark mode */
+@media (prefers-color-scheme: dark) {
+  .card-type.type-rapport, .modal-type.type-rapport {
+    background: rgba(86, 138, 214, 0.18);
+    border-color: rgba(86, 138, 214, 0.45);
+    color: #9dc1f7;
+  }
+  .card-type.type-document, .modal-type.type-document {
+    background: rgba(156, 163, 175, 0.15);
+    border-color: rgba(156, 163, 175, 0.4);
+    color: #c3c8d1;
+  }
+  .card-type.type-presentation, .modal-type.type-presentation {
+    background: rgba(240, 120, 80, 0.16);
+    border-color: rgba(240, 120, 80, 0.45);
+    color: #f5a488;
+  }
+  .card-type.type-audio, .modal-type.type-audio {
+    background: rgba(167, 106, 230, 0.18);
+    border-color: rgba(167, 106, 230, 0.45);
+    color: #c6a8f5;
+  }
+  .card-type.type-article, .modal-type.type-article {
+    background: rgba(70, 180, 110, 0.15);
+    border-color: rgba(70, 180, 110, 0.45);
+    color: #8fd9ac;
+  }
 }
 .card-title {
   font-size: 1rem;
@@ -313,13 +381,8 @@ select:focus {
   background: var(--bg);
   color: var(--text);
 }
+/* (styles communs vignettes : voir .card-type/.modal-type plus haut) */
 .modal-type {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   margin-bottom: 0.5rem;
 }
 .modal-title {
