@@ -177,14 +177,82 @@ select:focus {
 /* ============== Contenu / grille ============== */
 .content-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
   margin-bottom: 1rem;
 }
 .result-count {
   color: var(--text-muted);
   font-size: 0.9rem;
 }
+
+/* Select taille de page (entête de grille) */
+.page-size-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.page-size-label select {
+  width: auto;
+  padding: 0.3rem 0.45rem;
+  font-size: 0.85rem;
+}
+
+/* ============== Pagination de la grille ============== */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.25rem;
+}
+.pagination:empty { display: none; }
+
+.page-btn,
+.page-num {
+  min-width: 2.1rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  line-height: 1.2;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.page-btn:hover:not(:disabled),
+.page-num:hover:not(.active) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.page-num.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  cursor: default;
+}
+.page-btn:focus-visible,
+.page-num:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.page-ellipsis {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 0 0.15rem;
+}
+
 
 .grid {
   display: grid;
