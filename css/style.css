@@ -6,7 +6,7 @@
 
 :root {
   --bg: #ffffff;
-  --bg-soft: #f1f2f4;
+  --bg-soft: #eaf1fa;
   --bg-card: #ffffff;
   --bg-sidebar: #ffffff;
   --bg-modal: #ffffff;
@@ -14,11 +14,11 @@
   --text-muted: #6b7280;
   --border: #e5e7eb;
   --border-strong: #d1d5db;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --tag-bg: #eef2ff;
-  --tag-text: #4338ca;
-  --tag-active-bg: #4338ca;
+  --accent: #0b4387; /* bleu primaire du site hote (personnel.css) */
+  --accent-hover: #1a63b0;
+  --tag-bg: #e8f0fb;
+  --tag-text: #0b4387;
+  --tag-active-bg: #0b4387;
   --tag-active-text: #ffffff;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
@@ -98,7 +98,7 @@ select {
   padding: 0.5rem 0.65rem;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
-  background: var(--bg-soft);
+  background: #ffffff;
   color: var(--text);
   font-size: 0.9rem;
   font-family: inherit;
@@ -321,10 +321,10 @@ select:focus {
 .card:hover {
   transform: translateY(-2px);
   /* Halo bleu léger, façon néon douce */
-  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35),
-              0 4px 14px -2px rgba(37, 99, 235, 0.25),
-              0 0 18px rgba(37, 99, 235, 0.22);
-  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow: 0 0 0 1px rgba(11, 67, 135, 0.35),
+              0 4px 14px -2px rgba(11, 67, 135, 0.25),
+              0 0 18px rgba(11, 67, 135, 0.22);
+  border-color: rgba(11, 67, 135, 0.45);
 }
 .card:focus-visible {
   outline: 2px solid var(--accent);
@@ -612,11 +612,11 @@ html[data-embed="1"] {
   --text-muted: #6b7280;
   --border: #e5e7eb;
   --border-strong: #d1d5db;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --tag-bg: #eef2ff;
-  --tag-text: #4338ca;
-  --tag-active-bg: #4338ca;
+  --accent: #0b4387; /* bleu primaire du site hote (personnel.css) */
+  --accent-hover: #1a63b0;
+  --tag-bg: #e8f0fb;
+  --tag-text: #0b4387;
+  --tag-active-bg: #0b4387;
   --tag-active-text: #ffffff;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
@@ -625,7 +625,7 @@ html[data-embed="1"] {
 html[data-embed="1"] body { background: transparent; }
 html[data-embed="1"] .layout { padding: 1rem 1.25rem 2.5rem; }
 /* Sur le fond de l'hôte (blanc), un fond de survol transparent ne se voit pas */
-html[data-embed="1"] .type-check:hover { background: #f1f2f4; }
+html[data-embed="1"] .type-check:hover { background: #eaf1fa; }
 html[data-embed="1"] input[type="search"],
 html[data-embed="1"] select { background: #ffffff; }
 
