@@ -33,6 +33,7 @@
     resultCount: document.getElementById("result-count"),
     pageSizeSelect: document.getElementById("page-size-select"),
     pagination: document.getElementById("pagination"),
+    paginationTop: document.getElementById("pagination-top"),
     modal: document.getElementById("modal"),
     modalType: document.getElementById("modal-type"),
     modalTitle: document.getElementById("modal-title"),
@@ -216,12 +217,14 @@
     };
   }
 
-  // Barre de pagination : ‹ / numéros / › (tous si ≤ 6 pages, sinon fenêtre
-  // [première, dernière, courant±1] avec « … »). Chaque changement de filtre
-  // ramène à la page 1 (comme alpas).
+  // Barres de pagination (haut + bas, synchronisées) : ‹ / numéros / › (tous
+  // si ≤ 6 pages, sinon fenêtre [première, dernière, courant±1] avec « … »).
+  // Chaque changement de filtre ramène à la page 1 (comme alpas).
   function renderPagination(totalPages) {
+    const navs = [els.pagination, els.paginationTop].filter(Boolean);
+
     if (state.pageSize === "all" || totalPages <= 1) {
-      els.pagination.innerHTML = "";
+      navs.forEach((nav) => (nav.innerHTML = ""));
       return;
     }
 
@@ -246,15 +249,17 @@
     }
 
     html += `<button class="page-btn" data-page="next" ${state.currentPage >= totalPages - 1 ? "disabled" : ""} aria-label="Page suivante">›</button>`;
-    els.pagination.innerHTML = html;
 
-    els.pagination.querySelectorAll("button[data-page]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const p = btn.dataset.page;
-        if (p === "prev") state.currentPage = Math.max(0, state.currentPage - 1);
-        else if (p === "next") state.currentPage = state.currentPage + 1;
-        else state.currentPage = parseInt(p, 10);
-        render();
+    navs.forEach((nav) => {
+      nav.innerHTML = html;
+      nav.querySelectorAll("button[data-page]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const p = btn.dataset.page;
+          if (p === "prev") state.currentPage = Math.max(0, state.currentPage - 1);
+          else if (p === "next") state.currentPage = state.currentPage + 1;
+          else state.currentPage = parseInt(p, 10);
+          render();
+        });
       });
     });
   }
