@@ -58,10 +58,20 @@
     <section class="content" aria-label="Documents">
       <div class="content-header">
         <span id="result-count" class="result-count">— résultats</span>
+        <label for="page-size-select" class="page-size-label">Afficher
+          <select id="page-size-select">
+            <option value="12">12</option>
+            <option value="24">24</option>
+            <option value="48">48</option>
+            <option value="all">Tout</option>
+          </select>
+          par page
+        </label>
       </div>
       <div id="grid" class="grid">
         <p class="muted center">Chargement de la collection…</p>
       </div>
+      <nav id="pagination" class="pagination" aria-label="Pagination"></nav>
     </section>
   </main>
 

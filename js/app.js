@@ -18,6 +18,8 @@
     searchText: "",
     selectedYear: "",
     selectedType: "",
+    pageSize: "12",       // "12" | "24" | "48" | "all" (calque alpas)
+    currentPage: 0,       // index 0-based
   };
 
   // ---------- DOM ----------
@@ -29,6 +31,8 @@
     resetBtn: document.getElementById("reset-filters"),
     grid: document.getElementById("grid"),
     resultCount: document.getElementById("result-count"),
+    pageSizeSelect: document.getElementById("page-size-select"),
+    pagination: document.getElementById("pagination"),
     modal: document.getElementById("modal"),
     modalType: document.getElementById("modal-type"),
     modalTitle: document.getElementById("modal-title"),
@@ -190,6 +194,7 @@
         } else {
           state.selectedTags.add(tag);
         }
+        state.currentPage = 0; // tout filtre ramène à la page 1 (calque alpas)
         render();
       });
       els.tagList.appendChild(pill);
@@ -197,6 +202,63 @@
   }
 
   // ---------- Rendu ----------
+
+  // Calcule la tranche courante + borne currentPage (calque alpas).
+  function paginate(filtered) {
+    const pageSizeNum = (state.pageSize === "all") ? filtered.length : parseInt(state.pageSize, 10);
+    const totalPages = Math.max(1, Math.ceil(filtered.length / pageSizeNum));
+    if (state.currentPage >= totalPages) state.currentPage = totalPages - 1;
+    if (state.currentPage < 0) state.currentPage = 0;
+    const startIdx = state.currentPage * pageSizeNum;
+    return {
+      totalPages,
+      pageRows: filtered.slice(startIdx, startIdx + pageSizeNum),
+    };
+  }
+
+  // Barre de pagination : ‹ / numéros / › (tous si ≤ 6 pages, sinon fenêtre
+  // [première, dernière, courant±1] avec « … »). Chaque changement de filtre
+  // ramène à la page 1 (comme alpas).
+  function renderPagination(totalPages) {
+    if (state.pageSize === "all" || totalPages <= 1) {
+      els.pagination.innerHTML = "";
+      return;
+    }
+
+    let html = `<button class="page-btn" data-page="prev" ${state.currentPage === 0 ? "disabled" : ""} aria-label="Page précédente">‹</button>`;
+
+    if (totalPages <= 6) {
+      for (let i = 0; i < totalPages; i++) {
+        html += `<button class="page-num${i === state.currentPage ? " active" : ""}" data-page="${i}">${i + 1}</button>`;
+      }
+    } else {
+      const pages = new Set([0, totalPages - 1, state.currentPage, state.currentPage - 1, state.currentPage + 1]);
+      let prevShown = -1;
+      for (let i = 0; i < totalPages; i++) {
+        if (pages.has(i)) {
+          html += `<button class="page-num${i === state.currentPage ? " active" : ""}" data-page="${i}">${i + 1}</button>`;
+          prevShown = i;
+        } else if (prevShown !== -2) {
+          html += `<span class="page-ellipsis">…</span>`;
+          prevShown = -2;
+        }
+      }
+    }
+
+    html += `<button class="page-btn" data-page="next" ${state.currentPage >= totalPages - 1 ? "disabled" : ""} aria-label="Page suivante">›</button>`;
+    els.pagination.innerHTML = html;
+
+    els.pagination.querySelectorAll("button[data-page]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const p = btn.dataset.page;
+        if (p === "prev") state.currentPage = Math.max(0, state.currentPage - 1);
+        else if (p === "next") state.currentPage = state.currentPage + 1;
+        else state.currentPage = parseInt(p, 10);
+        render();
+      });
+    });
+  }
+
   function render() {
     const filtered = getFilteredItems();
     els.resultCount.textContent = `${filtered.length} résultat${filtered.length > 1 ? "s" : ""}`;
@@ -204,12 +266,15 @@
     // Rendu des tags dynamiques (basé sur les items filtrés)
     renderTags(filtered);
 
+    const { totalPages, pageRows } = paginate(filtered);
+    renderPagination(totalPages);
+
     if (filtered.length === 0) {
       els.grid.innerHTML = `<p class="empty">Aucun document ne correspond aux filtres.</p>`;
       return;
     }
 
-    els.grid.innerHTML = filtered.map((it) => renderCard(it)).join("");
+    els.grid.innerHTML = pageRows.map((it) => renderCard(it)).join("");
 
     els.grid.querySelectorAll(".card").forEach((card) => {
       card.addEventListener("click", () => {
@@ -369,25 +434,37 @@
       clearTimeout(searchTimer);
       searchTimer = setTimeout(() => {
         state.searchText = e.target.value;
+        state.currentPage = 0; // tout filtre ramène à la page 1 (calque alpas)
         render();
       }, 150);
     });
 
     els.yearSelect.addEventListener("change", (e) => {
       state.selectedYear = e.target.value;
+      state.currentPage = 0;
       render();
     });
 
     els.typeSelect.addEventListener("change", (e) => {
       state.selectedType = e.target.value;
+      state.currentPage = 0;
       render();
     });
+
+    if (els.pageSizeSelect) {
+      els.pageSizeSelect.addEventListener("change", (e) => {
+        state.pageSize = e.target.value;
+        state.currentPage = 0; // changement de taille de page → retour page 1
+        render();
+      });
+    }
 
     els.resetBtn.addEventListener("click", () => {
       state.selectedTags.clear();
       state.searchText = "";
       state.selectedYear = "";
       state.selectedType = "";
+      state.currentPage = 0;
       els.search.value = "";
       els.yearSelect.value = "";
       els.typeSelect.value = "";
