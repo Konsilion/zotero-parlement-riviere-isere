@@ -1,10 +1,10 @@
 /* =========================================================
    Zotero Vitrine — logique front
    - Fetch collection.json
-   - Rendu des cartes
-   - Filtres (recherche + tags + année + type)
-   - Tags dynamiques : recalculés à chaque filtre, compteurs mis à jour, tags à 0 masqués
-   - Modale détail + copie BibTeX
+   - Rendu des cartes (sans tags depuis 09/10/26 — décision CEO)
+   - Filtres (recherche + année + type multi-choix)
+   - Types dynamiques : compteurs recalculés à chaque filtre, types à 0 masqués
+   - Modale détail + copie BibTeX (tags conservés en modale)
    ========================================================= */
 
 (() => {
@@ -14,10 +14,9 @@
   const state = {
     items: [],            // items de la collection
     meta: {},             // generated_at, count, ...
-    selectedTags: new Set(),
     searchText: "",
     selectedYear: "",
-    selectedType: "",
+    selectedTypes: new Set(), // filtre Type multi-choix (CEO 09/10/26)
     pageSize: "12",       // "12" | "24" | "48" | "all" (calque alpas)
     currentPage: 0,       // index 0-based
   };
@@ -26,8 +25,7 @@
   const els = {
     search: document.getElementById("search"),
     yearSelect: document.getElementById("year-select"),
-    typeSelect: document.getElementById("type-select"),
-    tagList: document.getElementById("tag-list"),
+    typeList: document.getElementById("type-list"),
     resetBtn: document.getElementById("reset-filters"),
     grid: document.getElementById("grid"),
     resultCount: document.getElementById("result-count"),
@@ -95,11 +93,8 @@
   // ---------- Construction des options de filtres (une seule fois) ----------
   function buildFilterOptions() {
     const years = new Set();
-    const types = new Set();
-
     for (const it of state.items) {
       if (it.year) years.add(it.year);
-      if (it.type) types.add(it.type);
     }
 
     [...years].sort((a, b) => b.localeCompare(a)).forEach((y) => {
@@ -108,17 +103,13 @@
       opt.textContent = y;
       els.yearSelect.appendChild(opt);
     });
-
-    [...types].sort((a, b) => a.localeCompare(b, "fr")).forEach((t) => {
-      const opt = document.createElement("option");
-      opt.value = t;
-      opt.textContent = t;
-      els.typeSelect.appendChild(opt);
-    });
   }
 
   // ---------- Filtrage ----------
-  function getFilteredItems() {
+  // ignoreTypes: calcule le filtrage SANS la condition de type — utilisé pour
+  // les compteurs de la sidebar : les types restent tous visibles et cochables
+  // même quand des types sont déjà sélectionnés (sinon le multi-choix casserait).
+  function getFilteredItems({ ignoreTypes = false } = {}) {
     const q = state.searchText.trim().toLowerCase();
     return state.items.filter((it) => {
       if (q) {
@@ -133,72 +124,70 @@
         if (!haystack.includes(q)) return false;
       }
       if (state.selectedYear && it.year !== state.selectedYear) return false;
-      if (state.selectedType && it.type !== state.selectedType) return false;
-      if (state.selectedTags.size > 0) {
-        const itemTags = new Set(it.tags || []);
-        for (const t of state.selectedTags) {
-          if (!itemTags.has(t)) return false;
-        }
-      }
+      if (!ignoreTypes && state.selectedTypes.size > 0 && !state.selectedTypes.has(it.type)) return false;
       return true;
     });
   }
 
-  // ---------- Rendu des tags dynamiques ----------
-  function renderTags(filteredItems) {
-    // Compter les tags parmi les items déjà filtrés (par recherche + année + type + tags sélectionnés)
-    const tagCounts = new Map();
-    for (const it of filteredItems) {
-      for (const t of it.tags || []) {
-        tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
-      }
+  // ---------- Rendu des types dynamiques (multi-choix) ----------
+  function renderTypes(scopedItems) {
+    // Compter les types parmi les items filtrés par recherche + année SANS le
+    // filtre type : un item a un seul type, la combinaison de types cochés est
+    // donc une union — les compteurs restent exacts même à plusieurs cochés.
+    const typeCounts = new Map();
+    for (const it of scopedItems) {
+      if (it.type) typeCounts.set(it.type, (typeCounts.get(it.type) || 0) + 1);
     }
 
-    // Tags déjà sélectionnés qui ne sont plus dans les résultats → on les garde visibles (actifs)
-    // mais ils auront le compteur des items restants
-    for (const t of state.selectedTags) {
-      if (!tagCounts.has(t)) {
-        tagCounts.set(t, 0);
-      }
+    // Types déjà sélectionnés qui ne sont plus dans le périmètre → gardés
+    // visibles (cochés, compteur 0) pour pouvoir les décocher.
+    for (const t of state.selectedTypes) {
+      if (!typeCounts.has(t)) typeCounts.set(t, 0);
     }
 
-    // Tri : tags sélectionnés en premier, puis par fréquence décroissante
-    const sortedTags = [...tagCounts.entries()].sort((a, b) => {
-      const aSelected = state.selectedTags.has(a[0]);
-      const bSelected = state.selectedTags.has(b[0]);
+    // Tri : types sélectionnés en premier, puis par fréquence décroissante
+    const sortedTypes = [...typeCounts.entries()].sort((a, b) => {
+      const aSelected = state.selectedTypes.has(a[0]);
+      const bSelected = state.selectedTypes.has(b[0]);
       if (aSelected && !bSelected) return -1;
       if (!aSelected && bSelected) return 1;
       return b[1] - a[1];
     });
 
-    // Filtrer les tags à 0 (sauf les sélectionnés, qu'on garde même à 0 pour pouvoir les désélectionner)
-    const visibleTags = sortedTags.filter(([tag, count]) => count > 0 || state.selectedTags.has(tag));
+    // Masquer les types à 0 (sauf les sélectionnés)
+    const visibleTypes = sortedTypes.filter(([type, count]) => count > 0 || state.selectedTypes.has(type));
 
-    if (visibleTags.length === 0) {
-      els.tagList.innerHTML = `<p class="muted">Aucun tag disponible</p>`;
+    if (visibleTypes.length === 0) {
+      els.typeList.innerHTML = `<p class="muted">Aucun type disponible</p>`;
       return;
     }
 
-    els.tagList.innerHTML = "";
-    for (const [tag, count] of visibleTags) {
-      const pill = document.createElement("button");
-      pill.type = "button";
-      pill.className = "tag-pill";
-      if (state.selectedTags.has(tag)) {
-        pill.classList.add("active");
-      }
-      pill.dataset.tag = tag;
-      pill.innerHTML = `${escapeHtml(tag)}<span class="tag-count">${count}</span>`;
-      pill.addEventListener("click", () => {
-        if (state.selectedTags.has(tag)) {
-          state.selectedTags.delete(tag);
-        } else {
-          state.selectedTags.add(tag);
-        }
+    els.typeList.innerHTML = "";
+    for (const [type, count] of visibleTypes) {
+      const label = document.createElement("label");
+      label.className = "type-check";
+      if (state.selectedTypes.has(type)) label.classList.add("active");
+
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.checked = state.selectedTypes.has(type);
+      box.addEventListener("change", () => {
+        if (box.checked) state.selectedTypes.add(type);
+        else state.selectedTypes.delete(type);
         state.currentPage = 0; // tout filtre ramène à la page 1 (calque alpas)
         render();
       });
-      els.tagList.appendChild(pill);
+
+      const name = document.createElement("span");
+      name.className = "type-check-name";
+      name.textContent = type;
+
+      const cnt = document.createElement("span");
+      cnt.className = "type-count";
+      cnt.textContent = count;
+
+      label.append(box, name, cnt);
+      els.typeList.appendChild(label);
     }
   }
 
@@ -268,8 +257,9 @@
     const filtered = getFilteredItems();
     els.resultCount.textContent = `${filtered.length} résultat${filtered.length > 1 ? "s" : ""}`;
 
-    // Rendu des tags dynamiques (basé sur les items filtrés)
-    renderTags(filtered);
+    // Rendu des types dynamiques (sur le périmètre recherche + année, sans le
+    // filtre type, pour que tous les types restent cochables en multi-choix)
+    renderTypes(getFilteredItems({ ignoreTypes: true }));
 
     const { totalPages, pageRows } = paginate(filtered);
     renderPagination(totalPages);
@@ -309,19 +299,12 @@
   const typeClass = (type) => "type-" + (TYPE_CLASS_MAP[type] || "autre");
 
   function renderCard(it) {
-    const visibleTags = (it.tags || []).slice(0, 4);
-    const hiddenCount = (it.tags || []).length - visibleTags.length;
-
     return `
       <article class="card" data-key="${escapeHtml(it.key)}" tabindex="0" role="button" aria-label="Voir le détail de ${escapeHtml(it.title)}">
         <span class="card-type ${typeClass(it.type)}">${escapeHtml(it.type || "Document")}</span>
         <h2 class="card-title">${escapeHtml(it.title)}</h2>
         <p class="card-authors">${escapeHtml(formatAuthorsShort(it.authors))}</p>
         <p class="card-meta">${it.year ? escapeHtml(it.year) : "Année inconnue"}</p>
-        <div class="card-tags">
-          ${visibleTags.map((t) => `<span class="card-tag">${escapeHtml(t)}</span>`).join("")}
-          ${hiddenCount > 0 ? `<span class="card-tag more">+${hiddenCount}</span>` : ""}
-        </div>
       </article>
     `;
   }
@@ -450,12 +433,6 @@
       render();
     });
 
-    els.typeSelect.addEventListener("change", (e) => {
-      state.selectedType = e.target.value;
-      state.currentPage = 0;
-      render();
-    });
-
     if (els.pageSizeSelect) {
       els.pageSizeSelect.addEventListener("change", (e) => {
         state.pageSize = e.target.value;
@@ -465,14 +442,12 @@
     }
 
     els.resetBtn.addEventListener("click", () => {
-      state.selectedTags.clear();
       state.searchText = "";
       state.selectedYear = "";
-      state.selectedType = "";
+      state.selectedTypes.clear();
       state.currentPage = 0;
       els.search.value = "";
       els.yearSelect.value = "";
-      els.typeSelect.value = "";
       render();
     });
 
