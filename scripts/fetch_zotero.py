@@ -70,7 +70,28 @@ def fetch_items(group_id, collection_id, api_key):
     return items
 
 
-def format_item(raw):
+def fetch_collections(group_id, api_key):
+    """Récupère toutes les collections du groupe et renvoie {clé: nom}."""
+    collections = {}
+    start = 0
+    limit = 100
+    headers = {"Zotero-API-Key": api_key, "Zotero-API-Version": "3"}
+    while True:
+        url = f"{API_BASE}/groups/{group_id}/collections?format=json&start={start}&limit={limit}"
+        resp = requests.get(url, headers=headers, timeout=30)
+        resp.raise_for_status()
+        batch = resp.json()
+        if not batch:
+            break
+        for c in batch:
+            collections[c["key"]] = (c["data"].get("name") or "").strip()
+        if len(batch) < limit:
+            break
+        start += limit
+    return collections
+
+
+def format_item(raw, collection_map=None):
     """Convertit un item brut Zotero en dictionnaire léger pour le front."""
     data = raw.get("data", {})
     # champ de titre selon le type : email→subject, statute→nameOfAct, sinon title
@@ -100,6 +121,15 @@ def format_item(raw):
             break
 
     tags = [t.get("tag", "").strip() for t in data.get("tags", []) if t.get("tag")]
+
+    # Tags dérivés des collections Zotero réelles de l'item (le groupe est
+    # structuré par collections, presque pas de tags manuels : la sidebar
+    # « Tags » de la vitrine doit refléter cette organisation réelle).
+    if collection_map:
+        for ckey in data.get("collections", []):
+            cname = collection_map.get(ckey)
+            if cname and cname not in tags:
+                tags.append(cname)
     doi = (data.get("DOI") or "").strip() or None
     url = (data.get("url") or "").strip() or None
 
@@ -148,10 +178,14 @@ TYPE_FR_MAP = {
 
 def main():
     print(f"→ Récupération depuis le groupe {ZOTERO_GROUP_ID}…")
+    collection_map = fetch_collections(ZOTERO_GROUP_ID, ZOTERO_API_KEY)
+    print(f"  {len(collection_map)} collections récupérées")
     raw_items = fetch_items(ZOTERO_GROUP_ID, ZOTERO_COLLECTION_ID, ZOTERO_API_KEY)
     print(f"  {len(raw_items)} items bruts récupérés")
 
-    formatted = [it for it in (format_item(r) for r in raw_items) if it is not None]
+    formatted = [
+        it for it in (format_item(r, collection_map) for r in raw_items) if it is not None
+    ]
     print(f"  {len(formatted)} items retenus (avec titre)")
 
     out_path = Path(__file__).resolve().parent.parent / "data" / "collection.json"
