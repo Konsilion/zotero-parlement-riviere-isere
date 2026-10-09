@@ -1,11 +1,12 @@
 /* =========================================================
    Zotero Vitrine — styles
    - Sobre, lisible, responsive
-   - Auto dark/light via prefers-color-scheme
+   - Thème clair unique, fond blanc (CEO 09/10/26)
    ========================================================= */
 
 :root {
-  --bg: #f7f7f8;
+  --bg: #ffffff;
+  --bg-soft: #f1f2f4;
   --bg-card: #ffffff;
   --bg-sidebar: #ffffff;
   --bg-modal: #ffffff;
@@ -27,27 +28,8 @@
   --max-width: 1400px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f1115;
-    --bg-card: #1a1d23;
-    --bg-sidebar: #16181d;
-    --bg-modal: #1a1d23;
-    --text: #e5e7eb;
-    --text-muted: #9ca3af;
-    --border: #2a2e36;
-    --border-strong: #3a3f48;
-    --accent: #60a5fa;
-    --accent-hover: #93c5fd;
-    --tag-bg: #1e293b;
-    --tag-text: #c7d2fe;
-    --tag-active-bg: #6366f1;
-    --tag-active-text: #ffffff;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
-  }
-}
+/* Thème clair unique : neutralise le dark mode de l'OS */
+:root { color-scheme: light; }
 
 * { box-sizing: border-box; }
 
@@ -116,7 +98,7 @@ select {
   padding: 0.5rem 0.65rem;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
-  background: var(--bg);
+  background: var(--bg-soft);
   color: var(--text);
   font-size: 0.9rem;
   font-family: inherit;
@@ -175,7 +157,7 @@ select:focus {
   font-size: 0.9rem;
   line-height: 1.3;
 }
-.type-check:hover { background: var(--bg); }
+.type-check:hover { background: var(--bg-soft); }
 .type-check input[type="checkbox"] {
   margin: 0;
   accent-color: var(--accent);
@@ -220,7 +202,7 @@ select:focus {
   font-family: inherit;
 }
 .reset-btn:hover {
-  background: var(--bg);
+  background: var(--bg-soft);
   border-color: var(--accent);
   color: var(--accent);
 }
@@ -398,39 +380,6 @@ select:focus {
   color: var(--accent);
 }
 
-/* Variantes dark mode */
-@media (prefers-color-scheme: dark) {
-  .card-type.type-rapport, .modal-type.type-rapport {
-    background: rgba(86, 138, 214, 0.18);
-    border-color: rgba(86, 138, 214, 0.45);
-    color: #9dc1f7;
-  }
-  .card-type.type-document, .modal-type.type-document {
-    background: rgba(156, 163, 175, 0.15);
-    border-color: rgba(156, 163, 175, 0.4);
-    color: #c3c8d1;
-  }
-  .card-type.type-presentation, .modal-type.type-presentation {
-    background: rgba(240, 120, 80, 0.16);
-    border-color: rgba(240, 120, 80, 0.45);
-    color: #f5a488;
-  }
-  .card-type.type-audio, .modal-type.type-audio {
-    background: rgba(167, 106, 230, 0.18);
-    border-color: rgba(167, 106, 230, 0.45);
-    color: #c6a8f5;
-  }
-  .card-type.type-article, .modal-type.type-article {
-    background: rgba(70, 180, 110, 0.15);
-    border-color: rgba(70, 180, 110, 0.45);
-    color: #8fd9ac;
-  }
-  .card-type.type-newsletter, .modal-type.type-newsletter {
-    background: rgba(200, 160, 40, 0.16);
-    border-color: rgba(200, 160, 40, 0.45);
-    color: #e8c561;
-  }
-}
 .card-title {
   font-size: 1rem;
   font-weight: 600;
@@ -519,7 +468,7 @@ select:focus {
   border-radius: var(--radius-sm);
 }
 .modal-close:hover {
-  background: var(--bg);
+  background: var(--bg-soft);
   color: var(--text);
 }
 /* (styles communs vignettes : voir .card-type/.modal-type plus haut) */
