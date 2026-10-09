@@ -10,6 +10,27 @@
 (() => {
   "use strict";
 
+  // ---------- Mode intégré (iframe hôte, ?mode=integre) ----------
+  // La vitrine embarquée n'a PAS de défilement propre : l'iframe est
+  // redimensionnée par la page hôte. À chaque changement de hauteur on
+  // l'annonce à l'hôte (postMessage) → une seule barre de défilement,
+  // celle de la page hôte, et aucun fond imposé (transparence totale).
+  const EMBED_MODE = new URLSearchParams(location.search).get("mode") === "integre";
+  if (EMBED_MODE) document.documentElement.setAttribute("data-embed", "1");
+
+  const notifyHost = (msg) => {
+    if (!EMBED_MODE) return;
+    // Origine non restreinte : le message ne transporte qu'un nombre,
+    // aucune donnée sensible.
+    if (window.parent !== window) parent.postMessage(msg, "*");
+  };
+  const notifyHeight = () => {
+    // Modale ouverte → la hauteur du document varie (ancrage absolu) :
+    // ne pas notifier l'hôte, pour éviter un cercle de redimensionnements.
+    if (els.modal && els.modal.getAttribute("aria-hidden") === "false") return;
+    notifyHost({ type: "zotero-vitrine:height", height: document.documentElement.scrollHeight });
+  };
+
   // ---------- État global ----------
   const state = {
     items: [],            // items de la collection
@@ -43,6 +64,8 @@
     modalSource: document.getElementById("modal-source"),
     modalBibtex: document.getElementById("modal-bibtex"),
     modalCopied: document.getElementById("modal-copied"),
+    modalContent: document.querySelector(".modal-content"),
+    modalBackdrop: document.querySelector(".modal-backdrop"),
   };
 
   // ---------- Utils ----------
@@ -87,6 +110,7 @@
         <small>Avez-vous lancé <code>python scripts/fetch_zotero.py</code> ?</small>
       </p>`;
       console.error(err);
+      notifyHeight();
     }
   }
 
@@ -266,6 +290,7 @@
 
     if (filtered.length === 0) {
       els.grid.innerHTML = `<p class="empty">Aucun document ne correspond aux filtres.</p>`;
+      notifyHeight();
       return;
     }
 
@@ -275,7 +300,7 @@
       card.addEventListener("click", () => {
         const key = card.dataset.key;
         const item = state.items.find((i) => i.key === key);
-        if (item) openModal(item);
+        if (item) openModal(item, card);
       });
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -284,6 +309,7 @@
         }
       });
     });
+    notifyHeight();
   }
 
   // ---------- Vignettes de type (classe CSS par type) ----------
@@ -310,7 +336,7 @@
   }
 
   // ---------- Modale ----------
-  function openModal(item) {
+  function openModal(item, triggerEl) {
     els.modalType.textContent = item.type || "Document";
     els.modalType.className = "modal-type " + typeClass(item.type);
     els.modalTitle.textContent = item.title;
@@ -346,11 +372,33 @@
 
     els.modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
+    if (EMBED_MODE) positionEmbedModal(triggerEl);
+  }
+
+  // En mode intégré, l'iframe est haute comme son contenu : un placement
+  // « fixed » centrerait la modale hors du champ visible. On l'ancre donc
+  // sur la carte cliquée — visible par définition — et le voile couvre
+  // tout le document.
+  function positionEmbedModal(triggerEl) {
+    const top = triggerEl
+      ? Math.max(8, Math.round(triggerEl.getBoundingClientRect().top) - 16)
+      : 16;
+    els.modal.style.top = top + "px";
+    els.modalBackdrop.style.top = -top + "px";
+    els.modalBackdrop.style.height = document.documentElement.scrollHeight + "px";
+    requestAnimationFrame(() => {
+      els.modalContent.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
   }
 
   function closeModal() {
     els.modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
+    if (EMBED_MODE) {
+      els.modal.style.top = "";
+      els.modalBackdrop.style.top = "";
+      els.modalBackdrop.style.height = "";
+    }
   }
 
   // ---------- BibTeX ----------
@@ -474,5 +522,13 @@
   document.addEventListener("DOMContentLoaded", () => {
     attachListeners();
     loadCollection();
+    if (EMBED_MODE) {
+      // Hauteur initiale + suivi continu (grille, filtres, resize du navigateur)
+      notifyHeight();
+      window.addEventListener("load", notifyHeight);
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(() => notifyHeight()).observe(document.body);
+      }
+    }
   });
 })();

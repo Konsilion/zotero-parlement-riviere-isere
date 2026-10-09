@@ -641,3 +641,76 @@ select:focus {
 body.modal-open {
   overflow: hidden;
 }
+
+/* ============== Mode intégré (?mode=integre) ==============
+   La vitrine est embarquée dans une page hôte qui redimensionne l'iframe
+   (postMessage) : la page hôte fournit le fond et l'unique défilement.
+   - fond transparent : la teinte de la page reste celle de l'hôte ;
+   - l'hôte (mkdocs-material, palette claire fixe) impose le clair : un OS
+     en sombre rendrait sinon le texte de la vitrine invisible sur fond clair ;
+   - la modale s'ancre sur la carte cliquée (JS) : l'iframe n'ayant pas de
+     défilement propre, un placement « fixed » sortirait du champ visible. */
+html[data-embed="1"] {
+  color-scheme: light;
+  --bg: transparent;
+  --bg-card: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-modal: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --tag-bg: #eef2ff;
+  --tag-text: #4338ca;
+  --tag-active-bg: #4338ca;
+  --tag-active-text: #ffffff;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.12);
+}
+html[data-embed="1"] body { background: transparent; }
+html[data-embed="1"] .layout { padding: 1rem 1.25rem 2.5rem; }
+/* Sur le fond de l'hôte (blanc), un fond de survol transparent ne se voit pas */
+html[data-embed="1"] .type-check:hover { background: #f1f2f4; }
+html[data-embed="1"] input[type="search"],
+html[data-embed="1"] select { background: #ffffff; }
+
+/* Vignettes de type : re-forçage des variantes claires (les variantes
+   sombres via prefers-color-scheme passeraient au travers sinon). */
+html[data-embed="1"] .card-type.type-rapport,
+html[data-embed="1"] .modal-type.type-rapport {
+  background: #e3ecf7; border-color: #c3d3eb; color: #2b579a;
+}
+html[data-embed="1"] .card-type.type-document,
+html[data-embed="1"] .modal-type.type-document {
+  background: #f0f0f1; border-color: #d9d9dc; color: #5a5a5e;
+}
+html[data-embed="1"] .card-type.type-presentation,
+html[data-embed="1"] .modal-type.type-presentation {
+  background: #fbeae3; border-color: #f2c9bc; color: #c2401f;
+}
+html[data-embed="1"] .card-type.type-audio,
+html[data-embed="1"] .modal-type.type-audio {
+  background: #f1e9fb; border-color: #dccaf4; color: #6d28d9;
+}
+html[data-embed="1"] .card-type.type-article,
+html[data-embed="1"] .modal-type.type-article {
+  background: #e3f1e8; border-color: #bfdccb; color: #1e6b3c;
+}
+html[data-embed="1"] .card-type.type-newsletter,
+html[data-embed="1"] .modal-type.type-newsletter {
+  background: #fdf3d8; border-color: #f2dfa4; color: #8a6116;
+}
+
+/* Modale ancrée en mode intégré (le JS pose le top inline) */
+html[data-embed="1"] .modal {
+  position: absolute;
+  top: 0;
+  bottom: auto;
+  height: auto;
+  padding: 0 1rem;
+  align-items: flex-start;
+}
+html[data-embed="1"] .modal-content { max-height: 640px; }
