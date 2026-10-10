@@ -2,7 +2,7 @@
    Zotero Vitrine — logique front
    - Fetch collection.json
    - Rendu des cartes (sans tags depuis 09/10/26 — décision CEO)
-   - Filtres (recherche + année multi-choix en menu déroulant + type multi-choix)
+   - Filtres (recherche floue insensible casse/accents + année multi-choix + type multi-choix)
    - Types dynamiques : compteurs recalculés à chaque filtre, types à 0 masqués
    - Modale détail + copie BibTeX (tags conservés en modale)
    ========================================================= */
@@ -92,6 +92,97 @@
     if (authors.length === 2) return authors.join(", ");
     return authors[0] + " et al.";
   };
+
+  // ---------- Recherche : normalisation + fuzzy (10/10/26, demande CEO) ----------
+  // La recherche doit être insensible à la casse, aux accents et tolérante
+  // aux petites fautes de frappe (« ~95 % de correspondance »). Deux étapes :
+  //   1. sous-chaîne sur le texte NORMALISÉ (casse, accents, œ, ’) ;
+  //   2. mode flou par mot : chaque mot significatif de la requête doit se
+  //      trouver dans la fiche, exact ou à ~1-2 fautes près (Damerau-
+  //      Levenshtein borné). Calibrage : 95 % STRICT n'autoriserait aucune
+  //      faute sur un mot de moins de 20 lettres (1 lettre sur 8 = 12 %
+  //      d'écart) — le fuzzy serait inutile. Budget retenu : 0 faute ≤ 5
+  //      car., 1 faute 6-12 car., 2 fautes 13-20 car. (≥ ~85 % par mot).
+
+  const FOLD_MAP = { "œ": "oe", "æ": "ae", "Œ": "oe", "Æ": "ae", "’": "'", "‘": "'" };
+
+  const searchNormalize = (s) =>
+    String(s ?? "")
+      .replace(/[œæŒÆ]/g, (m) => FOLD_MAP[m])
+      .replace(/[’‘]/g, "'")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+
+  const searchSplitWords = (s) =>
+    searchNormalize(s).split(/[^a-z0-9]+/).filter(Boolean);
+
+  // Distance de Damerau-Levenshtein restreinte (substitution, insertion,
+  // suppression, transposition adjacente), bornée par max : renvoie max+1
+  // dès que la distance excède max (coupe précoce, mots courts).
+  function boundedEditDistance(a, b, max) {
+    const la = a.length, lb = b.length;
+    if (Math.abs(la - lb) > max) return max + 1;
+    if (la === 0) return lb > max ? max + 1 : lb;
+    let dPrev2 = new Int32Array(lb + 1);
+    let dPrev = new Int32Array(lb + 1);
+    let dCur = new Int32Array(lb + 1);
+    for (let j = 0; j <= lb; j++) dPrev[j] = j;
+    for (let i = 1; i <= la; i++) {
+      dCur[0] = i;
+      let rowMin = i;
+      const ca = a.charCodeAt(i - 1);
+      for (let j = 1; j <= lb; j++) {
+        const cost = ca === b.charCodeAt(j - 1) ? 0 : 1;
+        let v = Math.min(dCur[j - 1] + 1, dPrev[j] + 1, dPrev[j - 1] + cost);
+        if (
+          i > 1 && j > 1 &&
+          ca === b.charCodeAt(j - 2) &&
+          a.charCodeAt(i - 2) === b.charCodeAt(j - 1)
+        ) {
+          v = Math.min(v, dPrev2[j - 2] + 1);
+        }
+        dCur[j] = v;
+        if (v < rowMin) rowMin = v;
+      }
+      if (rowMin > max) return max + 1;
+      const t = dPrev2; dPrev2 = dPrev; dPrev = dCur; dCur = t;
+    }
+    return dPrev[lb] > max ? max + 1 : dPrev[lb];
+  }
+
+  // Nombre de fautes tolérées pour un mot de la requête.
+  const typoBudget = (w) =>
+    w.length <= 5 ? 0 : w.length <= 12 ? 1 : w.length <= 20 ? 2 : Math.floor(w.length / 10);
+
+  // Un mot de requête correspond-il ? Exact d'abord (Set), sinon flou borné
+  // sur les seuls mots de longueur comparable.
+  function wordMatches(qWord, index) {
+    if (index.set.has(qWord)) return true;
+    const budget = typoBudget(qWord);
+    if (budget === 0) return false;
+    for (const w of index.words) {
+      if (w.length < qWord.length - budget || w.length > qWord.length + budget) continue;
+      if (boundedEditDistance(qWord, w, budget) <= budget) return true;
+    }
+    return false;
+  }
+
+  // Index de recherche par item, calculé une fois puis mis en cache (le JSON
+  // ne change pas sans re-fetch de la page).
+  const searchIndexCache = new Map(); // item.key → { norm, words, set }
+  function getSearchIndex(it) {
+    let index = searchIndexCache.get(it.key);
+    if (!index) {
+      const norm = searchNormalize(
+        [it.title, ...(it.authors || []), it.abstract || "", ...(it.tags || [])].join(" ")
+      );
+      const words = searchSplitWords(norm);
+      index = { norm, words, set: new Set(words) };
+      searchIndexCache.set(it.key, index);
+    }
+    return index;
+  }
 
   // ---------- Fetch initial ----------
   async function loadCollection() {
@@ -202,18 +293,21 @@
   // les compteurs de la sidebar : les types restent tous visibles et cochables
   // même quand des types sont déjà sélectionnés (sinon le multi-choix casserait).
   function getFilteredItems({ ignoreTypes = false } = {}) {
-    const q = state.searchText.trim().toLowerCase();
+    const qNorm = searchNormalize(state.searchText.trim());
+    // Mots significatifs (≥ 2 car.) pour le mode flou ; les mots de 1 car.
+    // (« l » de « l'eau ») ne portent pas de sens de recherche.
+    const qWords = qNorm ? qNorm.split(/[^a-z0-9]+/).filter((w) => w.length >= 2) : [];
     return state.items.filter((it) => {
-      if (q) {
-        const haystack = [
-          it.title,
-          ...(it.authors || []),
-          it.abstract,
-          ...(it.tags || []),
-        ]
-          .join(" ")
-          .toLowerCase();
-        if (!haystack.includes(q)) return false;
+      if (qNorm) {
+        const index = getSearchIndex(it);
+        // 1) sous-chaîne normalisée : casse/accents/apostrophes ignorés,
+        //    expressions multi-mots conservées telles quelles ;
+        if (!index.norm.includes(qNorm)) {
+          // 2) mode flou : chaque mot de la requête doit être trouvé dans la
+          //    fiche, exact ou à ~1-2 fautes près. Une requête sans aucun
+          //    mot significatif ne peut pas être rattrapée.
+          if (qWords.length === 0 || !qWords.every((w) => wordMatches(w, index))) return false;
+        }
       }
       if (state.selectedYears.size > 0 && !state.selectedYears.has(it.year)) return false;
       if (!ignoreTypes && state.selectedTypes.size > 0 && !state.selectedTypes.has(it.type)) return false;
