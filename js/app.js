@@ -59,9 +59,7 @@
     modal: document.getElementById("modal"),
     modalType: document.getElementById("modal-type"),
     modalTitle: document.getElementById("modal-title"),
-    modalAuthors: document.getElementById("modal-authors"),
-    modalYear: document.getElementById("modal-year"),
-    modalDateAdded: document.getElementById("modal-dateAdded"),
+    modalMetaLine: document.getElementById("modal-meta-line"),
     modalTags: document.getElementById("modal-tags"),
     modalAbstract: document.getElementById("modal-abstract"),
     modalSource: document.getElementById("modal-source"),
@@ -406,13 +404,40 @@
   }
 
   // ---------- Modale ----------
+  // Ligne meta compacte : « Par : <auteurs> · 📅 <année> · Ajouté le <date> ».
+  // Chaque segment absent de l'item est omis ; seuls les segments présents
+  // sont séparés par « · ». Les auteurs absents restent « Auteur inconnu »
+  // (comportement formatAuthors conservé).
+  function buildMetaSegments(item) {
+    const segments = [];
+    const authors = formatAuthors(item.authors);
+    if (authors) segments.push(`Par : ${authors}`);
+    if (item.year) segments.push(`📅 ${item.year}`);
+    if (item.dateAdded) segments.push(`Ajouté le ${item.dateAdded}`);
+    return segments;
+  }
+
+  function renderMetaLine(item) {
+    const segments = buildMetaSegments(item);
+    els.modalMetaLine.textContent = "";
+    segments.forEach((seg, i) => {
+      if (i > 0) els.modalMetaLine.append(" · ");
+      if (seg.startsWith("Par : ")) {
+        const span = document.createElement("span");
+        span.className = "modal-meta-authors";
+        span.textContent = seg;
+        els.modalMetaLine.append(span);
+      } else {
+        els.modalMetaLine.append(seg);
+      }
+    });
+  }
+
   function openModal(item, triggerEl) {
     els.modalType.textContent = item.type || "Document";
     els.modalType.className = "modal-type " + typeClass(item.type);
     els.modalTitle.textContent = item.title;
-    els.modalAuthors.textContent = formatAuthors(item.authors);
-    els.modalYear.textContent = item.year ? `📅 ${item.year}` : "";
-    els.modalDateAdded.textContent = item.dateAdded ? `Ajouté le ${item.dateAdded}` : "";
+    renderMetaLine(item);
 
     els.modalTags.innerHTML = (item.tags || [])
       .map((t) => `<span class="card-tag">${escapeHtml(t)}</span>`)
