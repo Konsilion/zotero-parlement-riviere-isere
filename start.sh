@@ -29,9 +29,12 @@ echo "→ Synchronisation avec Zotero…"
 python3 scripts/fetch_zotero.py
 
 # 4. Lancer le serveur (index.html est à la racine)
+# --bind 127.0.0.1 OBLIGATOIRE : sans lui, http.server écoute sur TOUTES les
+# interfaces (0.0.0.0) et sert le dossier entier — y compris scripts/config.py
+# (clé API Zotero). Incident 10/10/26 : ne jamais retirer le bind.
 PORT="${1:-8000}"
 echo ""
-echo "→ Serveur local sur http://localhost:${PORT}"
+echo "→ Serveur local sur http://localhost:${PORT} (écoute 127.0.0.1 uniquement)"
 echo "  (Ctrl+C pour arrêter)"
 echo ""
-python3 -m http.server "$PORT"
+python3 -m http.server "$PORT" --bind 127.0.0.1
