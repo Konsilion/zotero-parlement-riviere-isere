@@ -21,10 +21,28 @@
       </div>
 
       <div class="filter-block">
-        <label for="year-select" class="filter-label">Année</label>
-        <select id="year-select">
-          <option value="">Toutes les années</option>
-        </select>
+        <span class="filter-label" id="year-filter-label">Année</span>
+        <div id="year-dropdown" class="year-dropdown">
+          <button
+            type="button"
+            id="year-toggle"
+            class="year-toggle"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+          >
+            <span id="year-pill" class="year-pill-text">Toutes les années</span>
+            <span class="year-caret" aria-hidden="true">▾</span>
+          </button>
+          <div
+            id="year-menu"
+            class="year-menu"
+            role="listbox"
+            aria-multiselectable="true"
+            aria-labelledby="year-filter-label"
+          >
+            <p class="muted">Chargement…</p>
+          </div>
+        </div>
       </div>
 
       <div class="filter-block">

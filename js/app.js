@@ -2,7 +2,7 @@
    Zotero Vitrine — logique front
    - Fetch collection.json
    - Rendu des cartes (sans tags depuis 09/10/26 — décision CEO)
-   - Filtres (recherche + année + type multi-choix)
+   - Filtres (recherche + année multi-choix en menu déroulant + type multi-choix)
    - Types dynamiques : compteurs recalculés à chaque filtre, types à 0 masqués
    - Modale détail + copie BibTeX (tags conservés en modale)
    ========================================================= */
@@ -36,7 +36,7 @@
     items: [],            // items de la collection
     meta: {},             // generated_at, count, ...
     searchText: "",
-    selectedYear: "",
+    selectedYears: new Set(), // filtre Année multi-choix — menu déroulant (CEO 10/10/26)
     selectedTypes: new Set(), // filtre Type multi-choix (CEO 09/10/26)
     pageSize: "12",       // "12" | "24" | "48" | "all" (calque alpas)
     currentPage: 0,       // index 0-based
@@ -45,7 +45,10 @@
   // ---------- DOM ----------
   const els = {
     search: document.getElementById("search"),
-    yearSelect: document.getElementById("year-select"),
+    yearDropdown: document.getElementById("year-dropdown"),
+    yearToggle: document.getElementById("year-toggle"),
+    yearPill: document.getElementById("year-pill"),
+    yearMenu: document.getElementById("year-menu"),
     typeList: document.getElementById("type-list"),
     resetBtn: document.getElementById("reset-filters"),
     grid: document.getElementById("grid"),
@@ -121,13 +124,80 @@
       if (it.year) years.add(it.year);
     }
 
+    // Menu Année multi-choix : « Toutes les années » en tête (décoche tout
+    // d'un clic), puis les années distinctes par ordre décroissant.
+    els.yearMenu.innerHTML = "";
+    els.yearMenu.appendChild(buildYearOption("", "Toutes les années"));
     [...years].sort((a, b) => b.localeCompare(a)).forEach((y) => {
-      const opt = document.createElement("option");
-      opt.value = y;
-      opt.textContent = y;
-      els.yearSelect.appendChild(opt);
+      els.yearMenu.appendChild(buildYearOption(y, y));
     });
+    updateYearDropdownUI();
   }
+
+  // Une ligne du menu Année : checkbox + libellé. value vide = « Toutes les
+  // années » → vide la sélection d'un clic.
+  function buildYearOption(value, label) {
+    const row = document.createElement("label");
+    row.className = "year-option" + (value === "" ? " year-all" : "");
+    row.dataset.value = value;
+    row.setAttribute("role", "option");
+
+    const box = document.createElement("input");
+    box.type = "checkbox";
+    box.addEventListener("change", () => {
+      if (value === "") {
+        state.selectedYears.clear(); // tout décocher d'un clic
+      } else if (box.checked) {
+        state.selectedYears.add(value);
+      } else {
+        state.selectedYears.delete(value);
+      }
+      state.currentPage = 0; // tout filtre ramène à la page 1 (calque alpas)
+      updateYearDropdownUI();
+      render();
+    });
+
+    const name = document.createElement("span");
+    name.className = "year-option-name";
+    name.textContent = label;
+
+    row.append(box, name);
+    return row;
+  }
+
+  // Libellé du bouton pill : « Toutes les années » (aucune) | l'année | « N années ».
+  function yearPillLabel() {
+    const n = state.selectedYears.size;
+    if (n === 0) return "Toutes les années";
+    if (n === 1) return [...state.selectedYears][0];
+    return `${n} années`;
+  }
+
+  // Resynchronise menu (cases cochées, .active, aria-selected) et pill après
+  // chaque changement de sélection (ou reset). Classe de sélection = .active,
+  // convention du site (cf. filtre Type).
+  function updateYearDropdownUI() {
+    els.yearMenu.querySelectorAll(".year-option").forEach((row) => {
+      const value = row.dataset.value;
+      const checked = value === ""
+        ? state.selectedYears.size === 0
+        : state.selectedYears.has(value);
+      row.querySelector("input").checked = checked;
+      row.classList.toggle("active", checked);
+      row.setAttribute("aria-selected", checked ? "true" : "false");
+    });
+    els.yearPill.textContent = yearPillLabel();
+    els.yearToggle.classList.toggle("active", state.selectedYears.size > 0);
+  }
+
+  // ---------- Ouverture/fermeture du menu Année ----------
+  function setYearMenuOpen(open) {
+    els.yearDropdown.classList.toggle("open", open);
+    els.yearMenu.classList.toggle("open", open);
+    els.yearToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  const isYearMenuOpen = () => els.yearMenu.classList.contains("open");
 
   // ---------- Filtrage ----------
   // ignoreTypes: calcule le filtrage SANS la condition de type — utilisé pour
@@ -147,7 +217,7 @@
           .toLowerCase();
         if (!haystack.includes(q)) return false;
       }
-      if (state.selectedYear && it.year !== state.selectedYear) return false;
+      if (state.selectedYears.size > 0 && !state.selectedYears.has(it.year)) return false;
       if (!ignoreTypes && state.selectedTypes.size > 0 && !state.selectedTypes.has(it.type)) return false;
       return true;
     });
@@ -475,10 +545,14 @@
       }, 150);
     });
 
-    els.yearSelect.addEventListener("change", (e) => {
-      state.selectedYear = e.target.value;
-      state.currentPage = 0;
-      render();
+    // Filtre Année : menu déroulant multi-choix — clic bouton → ouvre/ferme
+    els.yearToggle.addEventListener("click", () => {
+      setYearMenuOpen(!isYearMenuOpen());
+    });
+
+    // Clic hors menu → ferme (les clics sur les options restent dedans)
+    document.addEventListener("click", (e) => {
+      if (isYearMenuOpen() && !els.yearDropdown.contains(e.target)) setYearMenuOpen(false);
     });
 
     if (els.pageSizeSelect) {
@@ -491,11 +565,12 @@
 
     els.resetBtn.addEventListener("click", () => {
       state.searchText = "";
-      state.selectedYear = "";
+      state.selectedYears.clear();
       state.selectedTypes.clear();
       state.currentPage = 0;
       els.search.value = "";
-      els.yearSelect.value = "";
+      updateYearDropdownUI(); // cases décochées + pill « Toutes les années »
+      setYearMenuOpen(false);
       render();
     });
 
@@ -503,7 +578,13 @@
       el.addEventListener("click", closeModal);
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && els.modal.getAttribute("aria-hidden") === "false") {
+      if (e.key !== "Escape") return;
+      if (isYearMenuOpen()) {
+        setYearMenuOpen(false); // Échap ferme le menu Année
+        els.yearToggle.focus();
+        return;
+      }
+      if (els.modal.getAttribute("aria-hidden") === "false") {
         closeModal();
       }
     });
