@@ -18,7 +18,12 @@ import requests
 # Charger la config locale (jamais commitée)
 sys.path.insert(0, str(Path(__file__).parent))
 try:
-    from config import ZOTERO_GROUP_ID, ZOTERO_API_KEY, ZOTERO_COLLECTION_ID
+    from config import (
+        ZOTERO_GROUP_ID,
+        ZOTERO_API_KEY,
+        ZOTERO_COLLECTION_ID,
+        ZOTERO_EXCLUDE_COLLECTION,
+    )
 except ImportError:
     sys.exit(
         "Fichier config.py introuvable.\n"
@@ -182,6 +187,17 @@ def main():
     print(f"  {len(collection_map)} collections récupérées")
     raw_items = fetch_items(ZOTERO_GROUP_ID, ZOTERO_COLLECTION_ID, ZOTERO_API_KEY)
     print(f"  {len(raw_items)} items bruts récupérés")
+
+    # Filtre anti-actualités : exclure les items de la collection configurée
+    # (filtrage côté script après le fetch complet — le scoping par collection
+    # dans l'API ne remonte pas les sous-collections).
+    if ZOTERO_EXCLUDE_COLLECTION:
+        raw_items = [
+            r for r in raw_items
+            if ZOTERO_EXCLUDE_COLLECTION not in r.get("data", {}).get("collections", [])
+        ]
+        print(f"  {len(raw_items)} items après exclusion de la collection "
+              f"{ZOTERO_EXCLUDE_COLLECTION}")
 
     formatted = [
         it for it in (format_item(r, collection_map) for r in raw_items) if it is not None
